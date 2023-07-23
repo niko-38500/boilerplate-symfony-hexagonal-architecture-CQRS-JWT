@@ -1,0 +1,14 @@
+App\User\Domain\Entity\User:
+  type: entity
+  table: user
+  id:
+    uuid:
+      type: string
+  fields:
+    username:
+      type: string
+    password:
+      type: string
+    email:
+      type: string
+      unique: true

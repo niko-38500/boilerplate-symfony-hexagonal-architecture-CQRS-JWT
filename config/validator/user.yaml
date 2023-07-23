@@ -1,0 +1,15 @@
+App\User\Domain\Entity\User:
+  properties:
+    email:
+      - NotBlank:
+          message: Veuillez remplir un email
+      - Email:
+          message: Votre email n'est pas valide
+    username:
+      - NotBlank:
+          message: Veuillez remplir un nom d'utilisateur
+      - Length:
+          max: 20
+          min: 3
+          minMessage: Your username must have at least 3 character
+          maxMessage: Your username must have 20 character max
