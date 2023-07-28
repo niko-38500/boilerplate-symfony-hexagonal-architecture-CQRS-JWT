@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrameworkInfrastructure\Infrastructure\Middleware;
 
+use App\FrameworkInfrastructure\Infrastructure\Exception\ValidatorMiddlewareException;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
 use Symfony\Component\Messenger\Middleware\StackInterface;
@@ -32,7 +33,7 @@ class ValidationMiddleware implements MiddlewareInterface
         }
 
         if (count($errors)) {
-            throw new \Exception($errors[0]->get(0)->getMessage());
+            throw new ValidatorMiddlewareException($errors);
         }
 
         return $stack->next()->handle($envelope, $stack);

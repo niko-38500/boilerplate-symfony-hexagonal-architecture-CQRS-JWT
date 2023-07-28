@@ -1,0 +1,14 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="App\User\Domain\Entity\User" table="user">
+        <id name="uuid" type="string" column="uuid" />
+
+        <field name="username" />
+        <field name="email" unique="true" />
+        <field name="password" />
+        <field name="isAccountValidated" type="boolean">
+            <options>
+                <option name="default">false</option>
+            </options>
+        </field>
+    </entity>
+</doctrine-mapping>

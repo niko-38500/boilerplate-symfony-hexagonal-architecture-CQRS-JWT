@@ -15,11 +15,11 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
         mappings:
-            App:
+            User:
                 is_bundle: false
-                dir: '%kernel.project_dir%/config/entity_binding'
-                type: yml
+                dir: '%kernel.project_dir%/config/entity_binding/User'
                 prefix: App\User\Domain\Entity
+                type: xml
 
 when@test:
     doctrine:

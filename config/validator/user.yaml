@@ -1,4 +1,9 @@
 App\User\Domain\Entity\User:
+  constraints:
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+        fields: email
+        message: Un compte avec cette email existe déjà
+
   properties:
     email:
       - NotBlank:
@@ -6,10 +11,15 @@ App\User\Domain\Entity\User:
       - Email:
           message: Votre email n'est pas valide
     username:
-      - NotBlank:
-          message: Veuillez remplir un nom d'utilisateur
       - Length:
           max: 20
           min: 3
-          minMessage: Your username must have at least 3 character
-          maxMessage: Your username must have 20 character max
+          minMessage: Votre nom d'utilisateur doit faire au moins 3 caractères
+          maxMessage: Votre nom d'utilisateur ne doit pas faire plus de 20 caractères
+
+    plainPassword:
+      - NotCompromisedPassword:
+          message: Votre mot de passe semble compromis, veuillez en changer
+      - PasswordStrength:
+          message: Votre mot de passe n'est pas assez solid
+          minScore: 1

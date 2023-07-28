@@ -4,14 +4,30 @@ declare(strict_types=1);
 
 namespace App\User\Presentation\Controller;
 
+use App\User\Domain\UseCase\CreateUser;
+use App\User\Presentation\DTO\UserInputDTO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route("/api/register", name: 'register', methods: ['POST', 'GET'])]
+#[Route("/api/register", name: 'register', methods: ['POST'])]
 class UserRegisterController extends AbstractController
 {
-    public function __invoke()
+    public function __construct(
+        private readonly CreateUser $createUser
+    ) {}
+
+    public function __invoke(#[MapRequestPayload] UserInputDTO $userDTO): JsonResponse
     {
-        return $this->json('authorized');
+        $this->createUser->execute($userDTO);
+
+        return $this->json([
+            'createdAt' => time(),
+            'status' => 'Ressource created',
+            'code' => Response::HTTP_CREATED,
+            'message' => 'Utilisateur créer avec succès'
+        ], Response::HTTP_CREATED);
     }
 }
