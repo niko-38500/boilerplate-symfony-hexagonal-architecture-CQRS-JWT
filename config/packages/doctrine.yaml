@@ -20,6 +20,11 @@ doctrine:
                 dir: '%kernel.project_dir%/config/entity_binding/User'
                 prefix: App\User\Domain\Entity
                 type: xml
+            ExpirationToken:
+                is_bundle: false
+                dir: '%kernel.project_dir%/src/FrameworkInfrastructure/Infrastructure/Token'
+                prefix: App\FrameworkInfrastructure\Infrastructure\Token
+                type: attribute
 
 when@test:
     doctrine:

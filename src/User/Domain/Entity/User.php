@@ -13,7 +13,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private string $uuid;
     private string $password;
     private bool $isAccountValidated = false;
-    private ?string $plainPassword = null;
+    private ?string $plainPassword;
+    private ?string $emailVerificationToken;
 
     public function __construct(
         private readonly string $username,
@@ -29,14 +30,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->uuid;
     }
 
-    public function validateAccount(): void
+    public function getEmailVerificationToken(): ?string
+    {
+        return $this->emailVerificationToken;
+    }
+
+    public function setEmailVerificationToken(?string $emailVerificationToken): void
+    {
+        $this->emailVerificationToken = $emailVerificationToken;
+    }
+
+    public function validateAccount(): self
     {
         $this->isAccountValidated = true;
+
+        return $this;
     }
 
     public function isAccountValidated(): bool
     {
-        return $this->isAccountValidated();
+        return $this->isAccountValidated;
     }
 
     public function getPlainPassword(): ?string

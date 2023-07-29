@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrameworkInfrastructure\Infrastructure\Exception;
 
+use App\FrameworkInfrastructure\Domain\Exception\HttpException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class ValidatorMiddlewareException extends \Exception implements HttpException

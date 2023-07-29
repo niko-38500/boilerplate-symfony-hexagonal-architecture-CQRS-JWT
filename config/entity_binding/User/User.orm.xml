@@ -10,5 +10,6 @@
                 <option name="default">false</option>
             </options>
         </field>
+        <field name="emailVerificationToken" nullable="true" />
     </entity>
 </doctrine-mapping>

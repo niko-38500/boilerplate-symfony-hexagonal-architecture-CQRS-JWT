@@ -4,8 +4,11 @@ namespace App\Tests\User\Presentation\Controller;
 
 use App\Tests\Utils\BaseWebTestCase;
 use App\User\Domain\Entity\User;
+use App\User\Domain\Repository\UserRepositoryInterface;
+use Symfony\Bundle\FrameworkBundle\Test\NotificationAssertionsTrait;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Router;
+use function PHPUnit\Framework\assertArrayHasKey;
 
 class UserRegisterControllerTest extends BaseWebTestCase
 {
@@ -40,8 +43,9 @@ class UserRegisterControllerTest extends BaseWebTestCase
         }
     }
 
-    public function testCreateUserSuccessfully(): void
+    public function testRegistrationWorkflow(): void
     {
+        self::$client->disableReboot();
         /** @var Router $router */
         $router = self::getContainer()->get('router');
         $userData = [
@@ -53,14 +57,52 @@ class UserRegisterControllerTest extends BaseWebTestCase
         self::$client->request('POST', $router->generate('register'), $userData);
         self::assertResponseIsSuccessful();
 
-        $user = $this->entityManager->getRepository(User::class)->findOneBy([
-            'email' => $userData['email']
-        ]);
+        /** @var UserRepositoryInterface $userRepository */
+        $userRepository = self::getContainer()->get(UserRepositoryInterface::class);
+
+        $user = $userRepository->findOneByEmail($userData['email']);
 
         self::assertNotNull($user);
+        self::assertNotNull($user->getEmailVerificationToken());
         self::assertSame($userData['username'], $user->getUsername());
         self::assertNull($user->getPlainPassword());
         self::assertSame($userData['email'], $user->getUserIdentifier());
+        self::assertFalse($user->isAccountValidated());
+
+        self::assertQueuedEmailCount(1);
+
+        $email = self::getMailerMessage();
+
+        self::assertEmailAddressContains($email, 'to', $userData['email']);
+        self::assertEmailHeaderSame($email, 'subject', 'Veuillez confirmer votre compte');
+        self::assertEmailTextBodyContains(
+            $email,
+            sprintf(
+                '(Ce lien ne sera plus valide à partir du %s)',
+                (new \DateTimeImmutable('now + 15 minutes'))->format('d/m/Y à H:i')
+            )
+        );
+
+        preg_match('#<a .*href="(.+)?"#', $email->getHtmlBody(), $matches);
+        self::assertArrayHasKey(1, $matches);
+
+        $confirmationLink = $matches[1];
+
+        $emailVerificationToken = $user->getEmailVerificationToken();
+
+        self::$client->request('GET', $confirmationLink);
+        self::assertResponseIsSuccessful();
+
+        $user = $userRepository->findOneByEmail($userData['email']);
+
+        self::assertTrue($user->isAccountValidated());
+
+        $response = json_decode(self::$client->getResponse()->getContent(), true);
+
+        self::assertNull($userRepository->findOneByTemporaryToken($emailVerificationToken));
+
+        self::assertArrayHasKey('token', $response['data']);
+        self::assertNotEmpty($response['data']['token']);
     }
 
     public function testCreateUserSuccessfullyAndWithUniqueViolation(): void

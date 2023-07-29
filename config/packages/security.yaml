@@ -11,7 +11,7 @@ security:
 #                class: App\User\Infrastructure\Security\SecurityUser
 #                property: email
         security_user_provider:
-            id: App\FrameworkInfrastructure\Infrastructure\Security\UserProvider
+            id: App\FrameworkInfrastructure\Infrastructure\Security\SecurityUserProvider
         # used to reload user from session & other features (e.g. switch_user)
     firewalls:
         login:
@@ -45,13 +45,15 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
-        - { path: ^/api/register, roles: PUBLIC_ACCESS }
+        - { path: ^/api/registration, roles: PUBLIC_ACCESS }
         - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
     security:
+#        access_control:
+#            - { path: /, roles: PUBLIC_ACCESS }
         password_hashers:
             # By default, password hashers are resource intensive and take time. This is
             # important to generate secure password hashes. In tests however, secure hashes

@@ -1,0 +1,10 @@
+<h1>Bienvenue {{ name }}!</h1>
+
+<p>
+    Vous n'êtes plus qu'as un click de crée votre compte
+</p>
+
+<p>
+    <a href="{{ path('user_account_validation', { token: token }) }}">Cliquez ici pour valider votre compte</a>
+    <small>(Ce lien ne sera plus valide à partir du {{ expirationDate|date('d/m/Y à H:i') }})</small>
+</p>

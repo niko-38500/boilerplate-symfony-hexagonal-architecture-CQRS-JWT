@@ -12,8 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route("/api/register", name: 'register', methods: ['POST'])]
-class UserRegisterController extends AbstractController
+#[Route("/api/registration", name: 'register', methods: ['POST'])]
+class UserRegistrationController extends AbstractController
 {
     public function __construct(
         private readonly CreateUser $createUser

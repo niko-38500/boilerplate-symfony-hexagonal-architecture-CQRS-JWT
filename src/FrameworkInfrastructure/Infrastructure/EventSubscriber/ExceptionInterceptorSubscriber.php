@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\FrameworkInfrastructure\Infrastructure\EventSubscriber;
 
-use App\FrameworkInfrastructure\Infrastructure\Exception\HttpException;
+use App\FrameworkInfrastructure\Domain\Exception\HttpException;
+use App\FrameworkInfrastructure\Domain\Exception\NotFoundException;
 use App\FrameworkInfrastructure\Infrastructure\Exception\ValidatorMiddlewareException;
 use App\FrameworkInfrastructure\Infrastructure\ValueObject\ViolationItem;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -37,7 +38,9 @@ class ExceptionInterceptorSubscriber implements EventSubscriberInterface
             return;
         }
 
-        if ($exception instanceof ValidatorMiddlewareException) {
+        if ($exception instanceof NotFoundException) {
+            $event->setResponse(new JsonResponse($exception->getResponseBody(), Response::HTTP_NOT_FOUND));
+        } elseif ($exception instanceof ValidatorMiddlewareException) {
             $event->setResponse(new JsonResponse([
                 'createdAt' => time(),
                 'status' => 'error',

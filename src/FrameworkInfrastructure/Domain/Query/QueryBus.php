@@ -6,5 +6,12 @@ namespace App\FrameworkInfrastructure\Domain\Query;
 
 interface QueryBus
 {
-    public function ask(QueryInterface $query): mixed;
+    /**
+     * @template T extends object
+     *
+     * @param QueryInterface<T> $query
+     *
+     * @return T
+     */
+    public function ask(QueryInterface $query);
 }
