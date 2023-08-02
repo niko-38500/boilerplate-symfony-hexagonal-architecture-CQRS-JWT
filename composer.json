@@ -94,8 +94,6 @@
         "phpunit/phpunit": "^10.2",
         "symfony/debug-bundle": "6.3.*",
         "symfony/maker-bundle": "^1.50",
-        "symfony/phpunit-bridge": "^6.3",
-        "symfony/var-dumper": "6.3.*",
-        "ext-uopz": "*"
+        "symfony/phpunit-bridge": "^6.3"
     }
 }
