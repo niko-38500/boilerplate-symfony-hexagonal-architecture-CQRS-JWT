@@ -10,12 +10,14 @@ use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Routing\Router;
 
 class BaseWebTestCase extends WebTestCase
 {
     protected static ?KernelBrowser $client;
     protected ?EntityManagerInterface $entityManager;
     private AbstractDatabaseTool $databaseTool;
+    protected Router $router;
 
     public static function setUpBeforeClass(): void
     {
@@ -24,7 +26,8 @@ class BaseWebTestCase extends WebTestCase
 
     public static function tearDownAfterClass(): void
     {
-        self::$client = null;
+        self::$client->getKernel()->shutdown();
+        self::ensureKernelShutdown();
     }
 
     public function setUp(): void
@@ -36,6 +39,7 @@ class BaseWebTestCase extends WebTestCase
         $this->databaseTool->loadFixtures();
 
         $this->entityManager = $container->get(EntityManagerInterface::class);
+        $this->router = $container->get('router');
     }
 
     public function tearDown(): void

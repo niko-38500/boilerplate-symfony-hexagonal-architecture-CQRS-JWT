@@ -8,7 +8,7 @@ use App\FrameworkInfrastructure\Domain\Query\QueryInterface;
 use App\User\Domain\Entity\User;
 
 /**
- * @implements QueryInterface<User|null>
+ * @template-implements QueryInterface<User|null>
  */
 class GetUserByEmailVerificationTokenQuery implements QueryInterface
 {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Domain\UseCase;
 
+use App\FrameworkInfrastructure\Domain\Exception\NotFoundException;
 use App\FrameworkInfrastructure\Domain\Jwt\JwtGeneratorInterface;
 use App\FrameworkInfrastructure\Domain\MessengerDispatcherInterface;
 use App\FrameworkInfrastructure\Domain\Query\QueryBus;
@@ -29,6 +30,10 @@ class ValidateUserAccount
         $query = new GetUserByEmailVerificationTokenQuery($token);
 
         $user = $this->queryDispatcher->ask($query);
+
+        if (is_null($user)) {
+            throw new NotFoundException();
+        }
 
         $user->validateAccount();
         $user->setEmailVerificationToken(null);

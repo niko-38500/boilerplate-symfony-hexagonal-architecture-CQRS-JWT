@@ -5,6 +5,6 @@
 </p>
 
 <p>
-    <a href="{{ path('user_account_validation', { token: token }) }}">Cliquez ici pour valider votre compte</a>
+    <a href="{{ absolute_url('user_account_validation', { token: token }) }}">Cliquez ici pour valider votre compte</a>
     <small>(Ce lien ne sera plus valide à partir du {{ expirationDate|date('d/m/Y à H:i') }})</small>
 </p>

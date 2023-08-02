@@ -7,7 +7,7 @@ namespace App\FrameworkInfrastructure\Domain\Query;
 interface QueryBus
 {
     /**
-     * @template T extends object
+     * @template T
      *
      * @param QueryInterface<T> $query
      *

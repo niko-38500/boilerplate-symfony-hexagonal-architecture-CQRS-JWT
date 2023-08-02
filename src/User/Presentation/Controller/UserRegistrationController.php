@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route("/api/registration", name: 'register', methods: ['POST'])]
+#[Route("/api/registration", name: 'user_register', methods: ['POST'])]
 class UserRegistrationController extends AbstractController
 {
     public function __construct(

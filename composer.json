@@ -91,6 +91,7 @@
         "doctrine/data-fixtures": "^1.6",
         "liip/test-fixtures-bundle": "^2.0.0",
         "phpunit/phpunit": "^10.2",
+        "slope-it/clock-mock": "^0.3.8",
         "symfony/debug-bundle": "6.3.*",
         "symfony/maker-bundle": "^1.50",
         "symfony/phpunit-bridge": "^6.3"
