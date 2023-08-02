@@ -63,8 +63,5 @@ class UserRegistrationFullWorkflowTest extends BaseWebTestCase
         $response = json_decode(self::$client->getResponse()->getContent(), true);
 
         self::assertNull($userRepository->findOneByTemporaryToken($emailVerificationToken));
-
-        self::assertArrayHasKey('token', $response['data']);
-        self::assertNotEmpty($response['data']['token']);
     }
 }

@@ -1,10 +1,10 @@
 controllers:
     resource: ../src/**/*Controller.php
     type: attribute
-    defaults:
-        _format: json
+#    defaults:
+#        _format: json
 
 api_login_check:
     path: /api/login_check
-    defaults:
-        _format: json
+#    defaults:
+#        _format: json

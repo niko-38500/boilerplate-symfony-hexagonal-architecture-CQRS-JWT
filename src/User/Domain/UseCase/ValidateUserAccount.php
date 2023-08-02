@@ -6,13 +6,9 @@ namespace App\User\Domain\UseCase;
 
 use App\FrameworkInfrastructure\Domain\Exception\NotFoundException;
 use App\FrameworkInfrastructure\Domain\Jwt\JwtGeneratorInterface;
-use App\FrameworkInfrastructure\Domain\MessengerDispatcherInterface;
 use App\FrameworkInfrastructure\Domain\Query\QueryBus;
-use App\FrameworkInfrastructure\Domain\Query\QueryDispatcherInterface;
 use App\FrameworkInfrastructure\Domain\Repository\PersisterManagerInterface;
-use App\User\Domain\Entity\User;
 use App\User\Domain\Query\GetUserByEmailVerificationTokenQuery;
-use App\User\Domain\Repository\UserRepositoryInterface;
 
 class ValidateUserAccount
 {
