@@ -20,7 +20,7 @@ class ExceptionInterceptorSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::EXCEPTION => 'onException'
+            KernelEvents::EXCEPTION => 'onException',
         ];
     }
 
@@ -35,6 +35,7 @@ class ExceptionInterceptorSubscriber implements EventSubscriberInterface
                 'code' => Response::HTTP_INTERNAL_SERVER_ERROR,
                 'message' => $exception->getMessage(),
             ]));
+
             return;
         }
 
@@ -45,7 +46,7 @@ class ExceptionInterceptorSubscriber implements EventSubscriberInterface
                 'createdAt' => time(),
                 'status' => 'error',
                 'code' => Response::HTTP_UNPROCESSABLE_ENTITY,
-                'errors' => $this->formatViolationList($exception->violations)
+                'errors' => $this->formatViolationList($exception->violations),
             ], Response::HTTP_UNPROCESSABLE_ENTITY));
         }
     }

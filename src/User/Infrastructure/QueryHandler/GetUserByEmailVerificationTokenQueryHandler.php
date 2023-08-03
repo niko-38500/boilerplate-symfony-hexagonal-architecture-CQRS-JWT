@@ -13,7 +13,8 @@ class GetUserByEmailVerificationTokenQueryHandler implements QueryHandlerInterfa
 {
     public function __construct(
         private readonly UserRepositoryInterface $userRepository
-    ) {}
+    ) {
+    }
 
     public function __invoke(GetUserByEmailVerificationTokenQuery $query): ?User
     {

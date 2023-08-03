@@ -12,7 +12,8 @@ class JwtGenerator implements JwtGeneratorInterface
 {
     public function __construct(
         private readonly JWTTokenManagerInterface $JWTTokenManager
-    ) {}
+    ) {
+    }
 
     public function generate(UserInterface $user): string
     {

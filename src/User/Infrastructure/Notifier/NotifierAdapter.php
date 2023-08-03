@@ -11,5 +11,6 @@ class NotifierAdapter implements NotifierInterface
 {
     public function __construct(
         private readonly SymfonyNotifierInterface $notifier
-    ) {}
+    ) {
+    }
 }

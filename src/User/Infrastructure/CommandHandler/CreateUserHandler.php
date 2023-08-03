@@ -10,7 +10,6 @@ use App\FrameworkInfrastructure\Infrastructure\Token\TemporaryTokenGenerator;
 use App\User\Domain\Command\CreateUserCommand;
 use App\User\Infrastructure\Email\UserRegistrationConfirmationEmail;
 use Symfony\Component\Mailer\MailerInterface;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class CreateUserHandler implements CommandHandlerInterface
@@ -21,7 +20,8 @@ class CreateUserHandler implements CommandHandlerInterface
         private readonly MailerInterface $mailer,
         private readonly TemporaryTokenGenerator $tokenGenerator,
         private readonly int $emailConfirmationTokenExpirationDelay
-    ) {}
+    ) {
+    }
 
     public function __invoke(CreateUserCommand $command): void
     {

@@ -6,5 +6,4 @@ namespace App\FrameworkInfrastructure\Domain\Exception;
 
 interface HttpException
 {
-
 }

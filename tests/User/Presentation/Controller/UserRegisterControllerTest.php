@@ -3,7 +3,6 @@
 namespace App\Tests\User\Presentation\Controller;
 
 use App\Tests\Utils\BaseWebTestCase;
-use App\User\Domain\Repository\UserRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserRegisterControllerTest extends BaseWebTestCase
@@ -16,7 +15,7 @@ class UserRegisterControllerTest extends BaseWebTestCase
             [
                 'username' => '',
                 'plainPassword' => '',
-                'email' => ''
+                'email' => '',
             ]
         );
 
@@ -41,7 +40,7 @@ class UserRegisterControllerTest extends BaseWebTestCase
         $userData = [
             'username' => 'lucky luciano',
             'plainPassword' => 'P4ssw@rd1234',
-            'email' => 'lauren@luciano.mafia'
+            'email' => 'lauren@luciano.mafia',
         ];
 
         self::$client->request('POST', $this->router->generate('user_register'), $userData);

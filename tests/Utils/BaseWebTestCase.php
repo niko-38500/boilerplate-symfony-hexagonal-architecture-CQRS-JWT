@@ -35,7 +35,7 @@ class BaseWebTestCase extends WebTestCase
         $container = self::getContainer();
 
         $this->databaseTool = $container->get(DatabaseToolCollection::class)->get();
-//        $this->databaseTool->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
+        //        $this->databaseTool->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
         $this->databaseTool->loadFixtures();
 
         $this->entityManager = $container->get(EntityManagerInterface::class);
@@ -44,9 +44,9 @@ class BaseWebTestCase extends WebTestCase
 
     public function tearDown(): void
     {
-//        $purger = new ORMPurger($this->entityManager);
-//        $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
-//        $purger->purge();
+        //        $purger = new ORMPurger($this->entityManager);
+        //        $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
+        //        $purger->purge();
 
         unset($this->entityManager);
     }

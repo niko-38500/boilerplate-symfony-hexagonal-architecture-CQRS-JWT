@@ -21,7 +21,7 @@ class UserRegistrationConfirmationEmail extends TemplatedEmail
             ->context([
                 'name' => $user->getUsername(),
                 'expirationDate' => $temporaryToken->getExpirationDate(),
-                'token' => $temporaryToken->getToken()
+                'token' => $temporaryToken->getToken(),
             ])
         ;
     }

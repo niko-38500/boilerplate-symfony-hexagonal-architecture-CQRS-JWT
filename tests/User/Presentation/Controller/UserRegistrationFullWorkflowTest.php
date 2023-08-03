@@ -4,8 +4,6 @@ namespace App\Tests\User\Presentation\Controller;
 
 use App\Tests\Utils\BaseWebTestCase;
 use App\User\Domain\Repository\UserRepositoryInterface;
-use SlopeIt\ClockMock\ClockMock;
-use Symfony\Component\HttpFoundation\Response;
 
 class UserRegistrationFullWorkflowTest extends BaseWebTestCase
 {
@@ -14,7 +12,7 @@ class UserRegistrationFullWorkflowTest extends BaseWebTestCase
         $userData = [
             'username' => 'lucky luciano',
             'plainPassword' => 'P4ssw@rd1234',
-            'email' => 'lauren@luciano.mafia'
+            'email' => 'lauren@luciano.mafia',
         ];
 
         self::$client->request('POST', $this->router->generate('user_register'), $userData);

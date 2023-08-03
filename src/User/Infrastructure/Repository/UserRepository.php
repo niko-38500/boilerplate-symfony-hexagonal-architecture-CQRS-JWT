@@ -15,7 +15,8 @@ class UserRepository implements UserRepositoryInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager
-    ) {}
+    ) {
+    }
 
     private function createQueryBuilder(): QueryBuilder
     {
@@ -53,7 +54,7 @@ class UserRepository implements UserRepositoryInterface
             ->andWhere('t.expiresAt > :now')
             ->setParameters([
                 'token' => $token,
-                'now' => CarbonImmutable::now()
+                'now' => CarbonImmutable::now(),
             ])
             ->getQuery()
             ->getOneOrNullResult();

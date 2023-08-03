@@ -19,7 +19,8 @@ class SecurityUserProvider implements UserProviderInterface, PasswordUpgraderInt
     public function __construct(
         private readonly UserRepositoryInterface $userRepository,
         private readonly EntityManagerInterface $entityManager,
-    ) {}
+    ) {
+    }
 
     /**
      * Symfony calls this method if you use features like switch_user
