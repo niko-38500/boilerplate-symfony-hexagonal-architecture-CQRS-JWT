@@ -4,6 +4,7 @@ namespace App\Tests\User\Presentation\Controller;
 
 use App\Tests\Utils\BaseWebTestCase;
 use App\User\Domain\Repository\UserRepositoryInterface;
+use App\User\Infrastructure\Email\UserRegistrationConfirmationEmail;
 
 /**
  * @internal
@@ -37,6 +38,7 @@ class UserRegistrationFullWorkflowTest extends BaseWebTestCase
 
         self::assertQueuedEmailCount(1);
 
+        /** @var UserRegistrationConfirmationEmail $email */
         $email = self::getMailerMessage();
 
         self::assertEmailAddressContains($email, 'to', $userData['email']);

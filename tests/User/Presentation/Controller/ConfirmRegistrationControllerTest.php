@@ -3,6 +3,7 @@
 namespace App\Tests\User\Presentation\Controller;
 
 use App\Tests\Utils\BaseWebTestCase;
+use App\User\Infrastructure\Email\UserRegistrationConfirmationEmail;
 use Carbon\CarbonImmutable;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -36,6 +37,7 @@ class ConfirmRegistrationControllerTest extends BaseWebTestCase
         ]);
         self::assertQueuedEmailCount(1);
 
+        /** @var UserRegistrationConfirmationEmail $email */
         $email = self::getMailerMessage();
 
         preg_match('#<a .*href=".*?token=(.+)?"#', $email->getHtmlBody(), $matches);
