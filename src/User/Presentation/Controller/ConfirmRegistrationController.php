@@ -13,12 +13,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/api/registration/validation', name: "user_account_validation", methods: ["GET"])]
+#[Route('/api/registration/validation', name: 'user_account_validation', methods: ['GET'])]
 class ConfirmRegistrationController extends AbstractController
 {
     public function __construct(
         private readonly ValidateUserAccount $validateUserAccount
-    ) {}
+    ) {
+    }
 
     /**
      * @throws NotFoundException
@@ -41,6 +42,7 @@ class ConfirmRegistrationController extends AbstractController
         ], Response::HTTP_ACCEPTED);
 
         $response->headers->setCookie(Cookie::create('user_id', $jwtToken, strtotime('now + 10 days')));
+
         return $response;
     }
 }

@@ -10,5 +10,6 @@ class UserInputDTO
         public readonly string $username,
         public readonly string $email,
         public readonly ?string $plainPassword = null
-    ) {}
+    ) {
+    }
 }

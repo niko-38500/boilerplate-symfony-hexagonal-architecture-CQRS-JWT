@@ -12,12 +12,17 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Routing\Router;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 class BaseWebTestCase extends WebTestCase
 {
     protected static ?KernelBrowser $client;
     protected ?EntityManagerInterface $entityManager;
-    private AbstractDatabaseTool $databaseTool;
     protected Router $router;
+    private AbstractDatabaseTool $databaseTool;
 
     public static function setUpBeforeClass(): void
     {
@@ -35,7 +40,7 @@ class BaseWebTestCase extends WebTestCase
         $container = self::getContainer();
 
         $this->databaseTool = $container->get(DatabaseToolCollection::class)->get();
-//        $this->databaseTool->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
+        //        $this->databaseTool->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
         $this->databaseTool->loadFixtures();
 
         $this->entityManager = $container->get(EntityManagerInterface::class);
@@ -44,9 +49,9 @@ class BaseWebTestCase extends WebTestCase
 
     public function tearDown(): void
     {
-//        $purger = new ORMPurger($this->entityManager);
-//        $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
-//        $purger->purge();
+        //        $purger = new ORMPurger($this->entityManager);
+        //        $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
+        //        $purger->purge();
 
         unset($this->entityManager);
     }

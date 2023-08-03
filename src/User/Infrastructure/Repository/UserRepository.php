@@ -15,11 +15,7 @@ class UserRepository implements UserRepositoryInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager
-    ) {}
-
-    private function createQueryBuilder(): QueryBuilder
-    {
-        return $this->entityManager->createQueryBuilder()->from(User::class, 'u');
+    ) {
     }
 
     public function findOneByEmail(string $email): ?User
@@ -29,7 +25,8 @@ class UserRepository implements UserRepositoryInterface
             ->where('u.email = :email')
             ->setParameter('email', $email)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+        ;
     }
 
     public function findOneByEmailValidated(string $email): ?User
@@ -40,7 +37,8 @@ class UserRepository implements UserRepositoryInterface
             ->andWhere('u.isAccountValidated = TRUE')
             ->setParameter('email', $email)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+        ;
     }
 
     public function findOneByTemporaryToken(string $token): ?User
@@ -53,10 +51,11 @@ class UserRepository implements UserRepositoryInterface
             ->andWhere('t.expiresAt > :now')
             ->setParameters([
                 'token' => $token,
-                'now' => CarbonImmutable::now()
+                'now' => CarbonImmutable::now(),
             ])
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+        ;
 
         if (!$storedToken) {
             return null;
@@ -67,6 +66,12 @@ class UserRepository implements UserRepositoryInterface
             ->where('u.emailVerificationToken = :token')
             ->setParameter('token', $storedToken->getToken())
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+        ;
+    }
+
+    private function createQueryBuilder(): QueryBuilder
+    {
+        return $this->entityManager->createQueryBuilder()->from(User::class, 'u');
     }
 }

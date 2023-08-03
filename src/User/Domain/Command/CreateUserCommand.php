@@ -11,5 +11,6 @@ class CreateUserCommand implements CommandInterface
 {
     public function __construct(
         public User $user
-    ) {}
+    ) {
+    }
 }

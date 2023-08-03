@@ -11,12 +11,13 @@ class TemporaryTokenGenerator
 {
     public function __construct(
         private readonly PersisterManagerInterface $persisterManager,
-    ) {}
+    ) {
+    }
 
     public function generate(int $delay): TemporaryToken
     {
         $token = new TemporaryToken(
-            md5(uniqid() . uniqid()),
+            md5(uniqid().uniqid()),
             new CarbonImmutable(sprintf('now + %s minutes', $delay))
         );
 

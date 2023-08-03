@@ -13,7 +13,8 @@ class CreateUser
 {
     public function __construct(
         private readonly CommandBus $commandDispatcher
-    ) {}
+    ) {
+    }
 
     public function execute(UserInputDTO $userDTO): void
     {

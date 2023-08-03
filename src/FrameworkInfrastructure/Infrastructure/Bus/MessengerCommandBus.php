@@ -12,7 +12,8 @@ class MessengerCommandBus implements CommandBus
 {
     public function __construct(
         private readonly MessageBusInterface $commandBus
-    ) {}
+    ) {
+    }
 
     public function dispatch(CommandInterface $command): void
     {

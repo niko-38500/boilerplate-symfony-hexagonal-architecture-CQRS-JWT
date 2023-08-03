@@ -4,9 +4,13 @@ namespace App\Tests\User\Presentation\Controller;
 
 use App\Tests\Utils\BaseWebTestCase;
 use App\User\Domain\Repository\UserRepositoryInterface;
-use SlopeIt\ClockMock\ClockMock;
-use Symfony\Component\HttpFoundation\Response;
+use App\User\Infrastructure\Email\UserRegistrationConfirmationEmail;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 class UserRegistrationFullWorkflowTest extends BaseWebTestCase
 {
     public function testRegistrationWorkflow(): void
@@ -14,7 +18,7 @@ class UserRegistrationFullWorkflowTest extends BaseWebTestCase
         $userData = [
             'username' => 'lucky luciano',
             'plainPassword' => 'P4ssw@rd1234',
-            'email' => 'lauren@luciano.mafia'
+            'email' => 'lauren@luciano.mafia',
         ];
 
         self::$client->request('POST', $this->router->generate('user_register'), $userData);
@@ -34,6 +38,7 @@ class UserRegistrationFullWorkflowTest extends BaseWebTestCase
 
         self::assertQueuedEmailCount(1);
 
+        /** @var UserRegistrationConfirmationEmail $email */
         $email = self::getMailerMessage();
 
         self::assertEmailAddressContains($email, 'to', $userData['email']);
@@ -63,5 +68,7 @@ class UserRegistrationFullWorkflowTest extends BaseWebTestCase
         $response = json_decode(self::$client->getResponse()->getContent(), true);
 
         self::assertNull($userRepository->findOneByTemporaryToken($emailVerificationToken));
+
+        // TODO: add test that the temporary token is removed and the user has null token field
     }
 }

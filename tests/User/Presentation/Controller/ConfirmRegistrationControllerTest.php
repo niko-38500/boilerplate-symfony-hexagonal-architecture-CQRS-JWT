@@ -3,9 +3,15 @@
 namespace App\Tests\User\Presentation\Controller;
 
 use App\Tests\Utils\BaseWebTestCase;
+use App\User\Infrastructure\Email\UserRegistrationConfirmationEmail;
 use Carbon\CarbonImmutable;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 class ConfirmRegistrationControllerTest extends BaseWebTestCase
 {
     public function testPageNotFoundWhenNoToken(): void
@@ -27,10 +33,11 @@ class ConfirmRegistrationControllerTest extends BaseWebTestCase
         self::$client->request('POST', $this->router->generate('user_register'), [
             'username' => 'johnnyS',
             'plainPassword' => 'P4ssw@rd1234',
-            'email' => 'john@doe.fr'
+            'email' => 'john@doe.fr',
         ]);
         self::assertQueuedEmailCount(1);
 
+        /** @var UserRegistrationConfirmationEmail $email */
         $email = self::getMailerMessage();
 
         preg_match('#<a .*href=".*?token=(.+)?"#', $email->getHtmlBody(), $matches);
