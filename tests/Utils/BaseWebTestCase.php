@@ -12,12 +12,17 @@ use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Routing\Router;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 class BaseWebTestCase extends WebTestCase
 {
     protected static ?KernelBrowser $client;
     protected ?EntityManagerInterface $entityManager;
-    private AbstractDatabaseTool $databaseTool;
     protected Router $router;
+    private AbstractDatabaseTool $databaseTool;
 
     public static function setUpBeforeClass(): void
     {

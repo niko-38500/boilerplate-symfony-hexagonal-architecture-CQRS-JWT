@@ -5,6 +5,11 @@ namespace App\Tests\User\Presentation\Controller;
 use App\Tests\Utils\BaseWebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 class UserRegisterControllerTest extends BaseWebTestCase
 {
     public function testCreateUserWithValidationError(): void

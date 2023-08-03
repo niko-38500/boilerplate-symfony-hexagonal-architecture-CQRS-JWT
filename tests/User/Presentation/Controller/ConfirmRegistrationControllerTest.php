@@ -6,6 +6,11 @@ use App\Tests\Utils\BaseWebTestCase;
 use Carbon\CarbonImmutable;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 class ConfirmRegistrationControllerTest extends BaseWebTestCase
 {
     public function testPageNotFoundWhenNoToken(): void

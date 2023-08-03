@@ -5,6 +5,11 @@ namespace App\Tests\User\Presentation\Controller;
 use App\Tests\Utils\BaseWebTestCase;
 use App\User\Domain\Repository\UserRepositoryInterface;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 class UserRegistrationFullWorkflowTest extends BaseWebTestCase
 {
     public function testRegistrationWorkflow(): void
@@ -61,5 +66,7 @@ class UserRegistrationFullWorkflowTest extends BaseWebTestCase
         $response = json_decode(self::$client->getResponse()->getContent(), true);
 
         self::assertNull($userRepository->findOneByTemporaryToken($emailVerificationToken));
+
+        // TODO: add test that the temporary token is removed and the user has null token field
     }
 }
