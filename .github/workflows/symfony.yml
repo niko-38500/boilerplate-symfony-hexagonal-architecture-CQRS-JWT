@@ -23,9 +23,7 @@ jobs:
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
       - name: PHPStan
-        uses: vendor/bin/phpstan analyse src tests
-        with:
-          args: --config=.php-cs-fixer.dist.php --diff --dry-run
+        run: vendor/bin/phpstan analyse src tests
   php-cs-fixer:
     name: Check CS fixer
     runs-on: ubuntu-latest
