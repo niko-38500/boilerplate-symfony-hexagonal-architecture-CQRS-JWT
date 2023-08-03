@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 class NotFoundException extends \Exception implements HttpException
 {
     /**
-     * @return array<string, string|int>
+     * @return array<string, int|string>
      */
     public function getResponseBody(): array
     {
