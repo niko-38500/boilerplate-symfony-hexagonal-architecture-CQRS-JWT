@@ -67,6 +67,7 @@
         "symfony/polyfill-php81": "*"
     },
     "scripts": {
+        "qa": "composer cs && composer stan",
         "stan": "vendor/bin/phpstan analyse src tests",
         "cs": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix",
         "up": "cd docker && docker-compose up -d",
