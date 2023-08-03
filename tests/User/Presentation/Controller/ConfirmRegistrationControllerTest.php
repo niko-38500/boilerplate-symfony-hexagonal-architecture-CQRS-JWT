@@ -3,7 +3,7 @@
 namespace App\Tests\User\Presentation\Controller;
 
 use App\Tests\Utils\BaseWebTestCase;
-use SlopeIt\ClockMock\ClockMock;
+use Carbon\CarbonImmutable;
 use Symfony\Component\HttpFoundation\Response;
 
 class ConfirmRegistrationControllerTest extends BaseWebTestCase
@@ -38,11 +38,14 @@ class ConfirmRegistrationControllerTest extends BaseWebTestCase
 
         $token = $matches[1];
 
-        ClockMock::freeze(new \DateTimeImmutable('now + 15 minutes'));
+        $tokenExpirationTime = self::getContainer()->getParameter('email_confirmation_token_expiration_delay');
+        CarbonImmutable::setTestNow(new \DateTimeImmutable(sprintf('now + %s minutes', $tokenExpirationTime)));
         self::$client->request('GET', $this->router->generate('user_account_validation', [
             'token' => $token,
         ]));
 
         self::assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
+
+        CarbonImmutable::setTestNow();
     }
 }

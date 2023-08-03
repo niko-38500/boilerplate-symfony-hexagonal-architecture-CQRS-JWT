@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrameworkInfrastructure\Infrastructure\Token;
 
+use Carbon\CarbonImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity()]
@@ -23,13 +24,13 @@ class TemporaryToken
         return $this->token;
     }
 
-    public function getExpirationDate(): \DateTimeImmutable
+    public function getExpirationDate(): CarbonImmutable
     {
-        return $this->expiresAt;
+        return new CarbonImmutable($this->expiresAt);
     }
 
     public function isExpired(): bool
     {
-        return $this->expiresAt < new \DateTimeImmutable();
+        return $this->expiresAt < CarbonImmutable::now();
     }
 }

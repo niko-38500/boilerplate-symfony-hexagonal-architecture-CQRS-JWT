@@ -7,6 +7,7 @@ namespace App\User\Infrastructure\Repository;
 use App\FrameworkInfrastructure\Infrastructure\Token\TemporaryToken;
 use App\User\Domain\Entity\User;
 use App\User\Domain\Repository\UserRepositoryInterface;
+use Carbon\CarbonImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 
@@ -52,7 +53,7 @@ class UserRepository implements UserRepositoryInterface
             ->andWhere('t.expiresAt > :now')
             ->setParameters([
                 'token' => $token,
-                'now' => new \DateTimeImmutable()
+                'now' => CarbonImmutable::now()
             ])
             ->getQuery()
             ->getOneOrNullResult();
