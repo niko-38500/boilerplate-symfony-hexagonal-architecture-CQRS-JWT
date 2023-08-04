@@ -127,5 +127,6 @@ WIP: load the user from the JWT payload and not the db (safe because signature e
 - ```composer cs```: Run php cs fixer
 - ```composer qa```: Run the stan and cs command together
 - ```composer docker```: Get into the php fpm container
-- ```composer up```: Launch the docker server
+- ```composer up```: Launch the docker nginx server
+- ```composer stop```: Stop the docker nginx server
 - ```composer rebuild-image```: rebuild the docker images

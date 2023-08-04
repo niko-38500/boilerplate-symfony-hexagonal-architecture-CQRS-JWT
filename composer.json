@@ -71,6 +71,7 @@
         "stan": "vendor/bin/phpstan analyse src tests",
         "cs": "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix",
         "up": "cd docker && docker-compose up -d",
+        "stop": "cd docker && docker-compose stop",
         "docker": "cd docker && docker container exec -it php-fpm bash",
         "rebuild-image": "cd docker && docker-compose build",
         "reset-db": "symfony console doctrine:fixture:load",
