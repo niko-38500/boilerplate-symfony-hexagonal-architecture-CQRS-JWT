@@ -8,7 +8,7 @@ use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface // TODO find a way to decoupling the user entity from the external packages
 {
     private string $uuid;
     private string $password;

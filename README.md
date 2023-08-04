@@ -7,6 +7,16 @@ This project can run either with the standard web development sever or with the 
 
 > Note that **this API is not production ready** yet
 
+## Roadmap
+- [ ] Improvement of the CI 
+  - [ ] Avoid to run twice a pipeline when a pr is merged.
+  - [ ] Generate code coverage.
+  - [ ] Increase the amount of tests
+- [ ] Implement a CD
+- [ ] Integration of blackfire for the monitoring of the app performance
+- [ ] Integration of a tool like sentry to monitor errors
+- [ ] Refactoring and improve code quality 
+
 ## Getting started
 
 1. First clone the repo 
