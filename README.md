@@ -12,6 +12,7 @@ This project can run either with the standard web development sever or with the 
   - [ ] Avoid to run twice a pipeline when a pr is merged.
   - [ ] Generate code coverage.
   - [ ] Increase the amount of tests
+- [ ] Implement the openApi specs and generate an openApi page with swagger-php
 - [ ] Implement a CD
 - [ ] Integration of blackfire for the monitoring of the app performance
 - [ ] Integration of a tool like sentry to monitor errors
