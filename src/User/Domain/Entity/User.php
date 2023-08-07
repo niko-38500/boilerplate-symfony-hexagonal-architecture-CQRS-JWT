@@ -19,7 +19,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface // TODO 
     public function __construct(
         private readonly string $username,
         private readonly string $email,
-        string $plainPassword,
+        ?string $plainPassword = null,
     ) {
         $this->uuid = Uuid::uuid4()->toString();
         $this->plainPassword = $plainPassword;

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\User\Domain\UseCase;
 
+use App\FrameworkInfrastructure\Domain\Command\CommandBus;
 use App\FrameworkInfrastructure\Domain\Exception\NotFoundException;
 use App\FrameworkInfrastructure\Domain\Jwt\JwtGeneratorInterface;
 use App\FrameworkInfrastructure\Domain\Query\QueryBus;
 use App\FrameworkInfrastructure\Domain\Repository\PersisterManagerInterface;
+use App\User\Domain\Command\RemoveTemporaryTokenCommand;
 use App\User\Domain\Query\GetUserByEmailVerificationTokenQuery;
 
 class ValidateUserAccount
@@ -15,6 +17,7 @@ class ValidateUserAccount
     public function __construct(
         private readonly PersisterManagerInterface $persisterManager,
         private readonly QueryBus $queryDispatcher,
+        private readonly CommandBus $commandBus,
         private readonly JwtGeneratorInterface $jwtGenerator
     ) {
     }
@@ -31,6 +34,9 @@ class ValidateUserAccount
         if (is_null($user)) {
             throw new NotFoundException();
         }
+
+        $removeTokenCommand = new RemoveTemporaryTokenCommand($user->getEmailVerificationToken());
+        $this->commandBus->dispatch($removeTokenCommand);
 
         $user->validateAccount();
         $user->setEmailVerificationToken(null);

@@ -22,4 +22,13 @@ class PersisterManager implements PersisterManagerInterface
             $this->entityManager->flush();
         }
     }
+
+    public function hardDelete(object $entity, bool $flush = false): void
+    {
+        $this->entityManager->remove($entity);
+
+        if ($flush) {
+            $this->entityManager->flush();
+        }
+    }
 }

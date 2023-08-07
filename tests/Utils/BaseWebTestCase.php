@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Utils;
 
-use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Doctrine\ORM\EntityManagerInterface;
-use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
-use Liip\TestFixturesBundle\Services\DatabaseTools\AbstractDatabaseTool;
+use Symfony\Bridge\Doctrine\DataCollector\DoctrineDataCollector;
+use Symfony\Bridge\Doctrine\DataCollector\DoctrineDataCollector as BaseCollector;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 use Symfony\Component\Routing\Router;
 
 /**
@@ -17,12 +15,10 @@ use Symfony\Component\Routing\Router;
  *
  * @coversNothing
  */
-class BaseWebTestCase extends WebTestCase
+class BaseWebTestCase extends BaseKernelTestCase
 {
     protected static ?KernelBrowser $client;
-    protected ?EntityManagerInterface $entityManager;
     protected Router $router;
-    private AbstractDatabaseTool $databaseTool;
 
     public static function setUpBeforeClass(): void
     {
@@ -37,22 +33,52 @@ class BaseWebTestCase extends WebTestCase
 
     public function setUp(): void
     {
-        $container = self::getContainer();
+        parent::setUp();
 
-        $this->databaseTool = $container->get(DatabaseToolCollection::class)->get();
-        //        $this->databaseTool->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
-        $this->databaseTool->loadFixtures();
-
-        $this->entityManager = $container->get(EntityManagerInterface::class);
-        $this->router = $container->get('router');
+        $this->router = static::getContainer()->get('router');
     }
 
-    public function tearDown(): void
+    protected function getProfiler(): Profile
     {
-        //        $purger = new ORMPurger($this->entityManager);
-        //        $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
-        //        $purger->purge();
+        if ($profiler = self::$client->getProfile()) {
+            return $profiler;
+        }
 
-        unset($this->entityManager);
+        throw new \LogicException(
+            'To get the profiler you must enable it first with "self::$client->enableProfiler()"'
+        );
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    protected function getProfilerDbQueries(): array
+    {
+        /** @var DoctrineDataCollector $db */
+        $db = $this->getProfiler()->getCollector('db');
+
+        return $this->filterFixturesAndTransactionDbQueries($db);
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    protected function filterFixturesAndTransactionDbQueries(BaseCollector $dataCollector): array
+    {
+        $queries = $dataCollector->getQueries();
+
+        return array_values(array_filter($queries['default'], function (array $query) {
+            if ('"START TRANSACTION"' === $query['sql'] || '"COMMIT"' === $query['sql']) {
+                return false;
+            }
+
+            foreach ($query['backtrace'] as $backtrace) {
+                if ('loadFixtures' === $backtrace['function']) {
+                    return false;
+                }
+            }
+
+            return true;
+        }));
     }
 }

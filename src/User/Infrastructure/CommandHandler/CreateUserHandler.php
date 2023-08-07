@@ -6,7 +6,7 @@ namespace App\User\Infrastructure\CommandHandler;
 
 use App\FrameworkInfrastructure\Domain\Command\CommandHandlerInterface;
 use App\FrameworkInfrastructure\Domain\Repository\PersisterManagerInterface;
-use App\FrameworkInfrastructure\Infrastructure\Token\TemporaryTokenGenerator;
+use App\FrameworkInfrastructure\Infrastructure\TemporaryToken\TemporaryTokenGenerator;
 use App\User\Domain\Command\CreateUserCommand;
 use App\User\Infrastructure\Email\UserRegistrationConfirmationEmail;
 use Symfony\Component\Mailer\MailerInterface;

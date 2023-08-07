@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\User\Infrastructure\Email;
 
-use App\FrameworkInfrastructure\Infrastructure\Token\TemporaryToken;
+use App\FrameworkInfrastructure\Infrastructure\TemporaryToken\TemporaryToken;
 use App\User\Domain\Entity\User;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 

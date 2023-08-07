@@ -22,6 +22,23 @@
         </testsuite>
     </testsuites>
 
+    <source>
+        <include>
+            <directory>src</directory>
+        </include>
+        <exclude>
+            <directory>src/FrameworkInfrastructure/Infrastructure/DataFixtures</directory>
+            <file>src/FrameworkInfrastructure/Infrastructure/Security/SecurityUserProvider.php</file>
+        </exclude>
+    </source>
+
+    <coverage>
+        <report>
+            <clover outputFile="var/coverage/xml/clover-coverage.xml" />
+            <html outputDirectory="var/coverage/html" />
+        </report>
+    </coverage>
+
     <extensions>
     </extensions>
 </phpunit>

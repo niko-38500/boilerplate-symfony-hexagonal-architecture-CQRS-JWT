@@ -2,6 +2,7 @@
 
 namespace App\Tests\User\Presentation\Controller;
 
+use App\FrameworkInfrastructure\Infrastructure\TemporaryToken\TemporaryToken;
 use App\Tests\Utils\BaseWebTestCase;
 use App\User\Domain\Repository\UserRepositoryInterface;
 use App\User\Infrastructure\Email\UserRegistrationConfirmationEmail;
@@ -58,17 +59,19 @@ class UserRegistrationFullWorkflowTest extends BaseWebTestCase
 
         $emailVerificationToken = $user->getEmailVerificationToken();
 
+        self::$client->enableProfiler();
+
         self::$client->request('GET', $confirmationLink);
         self::assertResponseIsSuccessful();
+
+        $queries = $this->getProfilerDbQueries();
+        self::assertLessThan(5, count($queries));
 
         $user = $userRepository->findOneByEmail($userData['email']);
 
         self::assertTrue($user->isAccountValidated());
 
-        $response = json_decode(self::$client->getResponse()->getContent(), true);
-
         self::assertNull($userRepository->findOneByTemporaryToken($emailVerificationToken));
-
-        // TODO: add test that the temporary token is removed and the user has null token field
+        self::assertCount(0, $this->entityManager->getRepository(TemporaryToken::class)->findAll());
     }
 }

@@ -43,6 +43,9 @@ jobs:
           args: --config=.php-cs-fixer.dist.php --diff --dry-run
   symfony-tests:
     name: Run test suits
+    needs:
+      - php-cs-fixer
+      - php-stan
     runs-on: ubuntu-latest
     steps:
       #  To automatically get bug fixes and new Php versions for shivammathur/setup-php,
@@ -73,4 +76,4 @@ jobs:
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
           DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
-        run: vendor/bin/phpunit
+        run: composer tests

@@ -75,6 +75,7 @@
         "docker": "cd docker && docker container exec -it php-fpm bash",
         "rebuild-image": "cd docker && docker-compose build",
         "reset-db": "symfony console doctrine:fixture:load",
+        "tests": "cd docker && docker-compose up -d && docker exec -it --workdir /var/www/html php-fpm ./vendor/bin/phpunit --colors",
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
@@ -104,6 +105,8 @@
         "symfony/debug-bundle": "6.3.*",
         "symfony/maker-bundle": "^1.50",
         "symfony/phpunit-bridge": "^6.3",
-        "symfony/var-dumper": "6.3.*"
+        "symfony/stopwatch": "6.3.*",
+        "symfony/var-dumper": "6.3.*",
+        "symfony/web-profiler-bundle": "6.3.*"
     }
 }
