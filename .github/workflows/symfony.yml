@@ -66,6 +66,8 @@ jobs:
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
       - name: Generate JWT key pair for test env
         run: php bin/console lexik:jwt:generate-keypair -e test
+      - name: Start docker containers
+        run: composer up
       - name: Create Database
         run: |
           mkdir -p data

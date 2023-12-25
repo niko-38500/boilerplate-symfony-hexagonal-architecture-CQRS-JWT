@@ -11,8 +11,7 @@ class UserProvider
 {
     public function __construct(
         private readonly TokenStorageInterface $tokenStorage
-    ) {
-    }
+    ) {}
 
     public function getAuthenticatedUser(): UserInterface
     {

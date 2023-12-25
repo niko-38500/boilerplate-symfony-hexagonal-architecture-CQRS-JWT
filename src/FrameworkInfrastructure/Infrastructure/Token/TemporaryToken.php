@@ -16,8 +16,7 @@ class TemporaryToken
         private readonly string $token,
         #[ORM\Column(type: 'datetime_immutable')]
         private readonly \DateTimeImmutable $expiresAt,
-    ) {
-    }
+    ) {}
 
     public function getToken(): string
     {

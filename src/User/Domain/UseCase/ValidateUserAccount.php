@@ -16,8 +16,7 @@ class ValidateUserAccount
         private readonly PersisterManagerInterface $persisterManager,
         private readonly QueryBus $queryDispatcher,
         private readonly JwtGeneratorInterface $jwtGenerator
-    ) {
-    }
+    ) {}
 
     /**
      * @return string Return the JWT of the user

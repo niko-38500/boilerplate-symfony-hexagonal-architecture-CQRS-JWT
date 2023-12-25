@@ -14,8 +14,7 @@ class ValidationMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private readonly ValidatorInterface $validator
-    ) {
-    }
+    ) {}
 
     public function handle(Envelope $envelope, StackInterface $stack): Envelope
     {
@@ -28,6 +27,7 @@ class ValidationMiddleware implements MiddlewareInterface
             }
 
             $errorsHandler = $this->validator->validate($item);
+
             if ($errorsHandler->count()) {
                 $errors[] = $errorsHandler;
             }

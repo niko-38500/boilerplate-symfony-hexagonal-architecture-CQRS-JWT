@@ -2,6 +2,4 @@
 
 namespace App\FrameworkInfrastructure\Domain\Command;
 
-interface CommandHandlerInterface
-{
-}
+interface CommandHandlerInterface {}

@@ -17,8 +17,7 @@ class UserRegistrationController extends AbstractController
 {
     public function __construct(
         private readonly CreateUser $createUser
-    ) {
-    }
+    ) {}
 
     public function __invoke(#[MapRequestPayload] UserInputDTO $userDTO): JsonResponse
     {

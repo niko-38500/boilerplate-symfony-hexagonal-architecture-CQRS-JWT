@@ -15,8 +15,7 @@ class UserRepository implements UserRepositoryInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager
-    ) {
-    }
+    ) {}
 
     public function findOneByEmail(string $email): ?User
     {
