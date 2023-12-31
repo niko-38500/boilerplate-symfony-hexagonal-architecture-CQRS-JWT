@@ -16,6 +16,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Cache Docker images.
+        id: docker-cache
+        uses: ScribeMD/docker-cache@0.3.7
+        with:
+          key: docker-${{ runner.os }}-${{ hashFiles(docker-compose.yml) }}
+
+      - name: Start docker containers
+        run: composer up
+
       - name: Cache Composer packages
         id: composer-cache
         uses: actions/cache@v3
@@ -24,9 +33,6 @@ jobs:
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-php-
-
-      - name: Start docker containers
-        run: composer up
 
       - name: Install Dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
@@ -50,11 +56,16 @@ jobs:
     name: Run test suits
     runs-on: ubuntu-latest
     steps:
-      - uses: shivammathur/setup-php@2cb9b829437ee246e9b3cac53555a39208ca6d28
-        with:
-          php-version: '8.3'
-
       - uses: actions/checkout@v3
+
+      - name: Cache Docker images.
+        id: docker-cache
+        uses: ScribeMD/docker-cache@0.3.7
+        with:
+          key: docker-${{ runner.os }}-${{ hashFiles(docker-compose.yml) }}
+
+      - name: Start docker containers
+        run: composer up
 
       - name: Copy .env.test.local
         run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
@@ -74,9 +85,6 @@ jobs:
 
       - name: Generate JWT key pair for test env
         run: php bin/console lexik:jwt:generate-keypair -e test
-
-      - name: Start docker containers
-        run: composer up
 
       - name: Create test Database
         run: composer test-db
