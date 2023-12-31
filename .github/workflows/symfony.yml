@@ -20,7 +20,7 @@ jobs:
         id: docker-cache
         uses: ScribeMD/docker-cache@0.3.7
         with:
-          key: docker-${{ runner.os }}-${{ hashFiles(**/docker-compose.yml) }}
+          key: docker-${{ runner.os }}-${{ hashFiles('**/docker-compose.yml') }}
 
       - name: Start docker containers
         run: composer up
@@ -62,7 +62,7 @@ jobs:
         id: docker-cache
         uses: ScribeMD/docker-cache@0.3.7
         with:
-          key: docker-${{ runner.os }}-${{ hashFiles(**/docker-compose.yml) }}
+          key: docker-${{ runner.os }}-${{ hashFiles('**/docker-compose.yml') }}
 
       - name: Start docker containers
         run: composer up
