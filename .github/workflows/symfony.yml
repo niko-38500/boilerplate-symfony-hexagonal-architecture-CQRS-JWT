@@ -55,8 +55,6 @@ jobs:
   tests:
     name: Run test suits
     runs-on: ubuntu-latest
-    container:
-      image: boilerplate-symfony-hexagonal-architecture-cqrs-jwt_php:latest
     steps:
       - uses: actions/checkout@v3
 
@@ -69,11 +67,11 @@ jobs:
       - name: Start docker containers
         run: composer up
 
-      - name: test
-        run: |
-          whoami
-          pwd
-          echo aa
+      #- name: test
+      #  run: |
+      #    whoami
+      #    pwd
+      #    echo aa
 
       - name: Copy .env.test.local
         run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
