@@ -84,7 +84,7 @@ jobs:
         run: docker exec php composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
 
       - name: Create cache dir
-        run: mkdir -p /srv/www/cycleflow/var/cache/test
+        run: docker exec php mkdir -p /srv/www/cycleflow/var/cache/test
 
       - name: Generate JWT key pair for test env
         run: composer jwt-gen-test
