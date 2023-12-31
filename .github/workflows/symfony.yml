@@ -94,6 +94,7 @@ jobs:
       - name: Create cache dir
         run: |
           pwd
+          ls -al
           docker exec php pwd
           docker exec php mkdir -p var/cache/test
 
