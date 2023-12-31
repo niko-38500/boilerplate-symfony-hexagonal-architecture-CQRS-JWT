@@ -95,8 +95,7 @@ jobs:
         run: |
           pwd
           ls -al
-          docker exec php pwd
-          docker exec php mkdir -p var/cache/test
+          mkdir -p var/cache/test
 
       - name: Generate JWT key pair for test env
         run: composer jwt-gen-test
