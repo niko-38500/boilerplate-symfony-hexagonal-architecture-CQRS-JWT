@@ -81,10 +81,10 @@ jobs:
 
       - name: Install Dependencies
         if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
+        run: docker exec php composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
 
       - name: Generate JWT key pair for test env
-        run: php bin/console lexik:jwt:generate-keypair -e test
+        run: composer jwt-gen-test
 
       - name: Create test Database
         run: composer test-db
