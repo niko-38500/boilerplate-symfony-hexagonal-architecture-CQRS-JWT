@@ -93,9 +93,8 @@ jobs:
       #  run: docker exec php mkdir -p /srv/www/cycleflow/var/cache/test
       - name: Create cache dir
         run: |
-          pwd
-          ls -al
           mkdir -p var/cache/test
+          chmod -R 777 var
 
       - name: Generate JWT key pair for test env
         run: composer jwt-gen-test
