@@ -12,6 +12,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\Exception\HttpException as SymfonyHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
@@ -28,7 +29,7 @@ class ExceptionInterceptorSubscriber implements EventSubscriberInterface
     {
         $exception = $event->getThrowable();
 
-        if (!$exception instanceof HttpException) {
+        if (!($exception instanceof HttpException) && !($exception instanceof SymfonyHttpException)) {
             $event->setResponse(new JsonResponse([
                 'createdAt' => time(),
                 'status' => 'error',

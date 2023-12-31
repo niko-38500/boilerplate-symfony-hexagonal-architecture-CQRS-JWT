@@ -8,20 +8,26 @@ services:
       - '8080:80'
       - '4433:443'
     volumes:
-      #- .:/var/www/html
-      - ./docker/nginx/conf:/etc/nginx/conf.d
+      - .:/srv/www/cycleflow:ro
+      - ./docker/nginx/conf:/etc/nginx/conf.d:ro
+    depends_on:
+      - php
+    networks:
+      - main
 
   php:
-    #user: 1000:1000
+    user: 1000:1000
     container_name: php
-    working_dir: /srv/www/cycle_flow
+    working_dir: /srv/www/cycleflow
     build:
       context: ./docker/php
       dockerfile: Dockerfile
     volumes:
-      - .:/srv/www/cycle_flow
+      - .:/srv/www/cycleflow:rw
     depends_on:
       - database
+    networks:
+      - main
 
   database:
     container_name: db
@@ -34,6 +40,12 @@ services:
       - database_data:/var/lib/postgresql/data:rw
     ports:
       - "5432:5432"
+    networks:
+      - main
 
 volumes:
   database_data:
+
+networks:
+  main:
+    name: main
