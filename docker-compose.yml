@@ -24,7 +24,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/srv/www/cycleflow:rw
-      - ./var:/srv/www/cycleflow/var:rw
     depends_on:
       - database
     networks:
