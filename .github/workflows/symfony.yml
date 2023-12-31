@@ -55,6 +55,8 @@ jobs:
   tests:
     name: Run test suits
     runs-on: ubuntu-latest
+    container:
+      image: boilerplate-symfony-hexagonal-architecture-cqrs-jwt_php:latest
     steps:
       - uses: actions/checkout@v3
 
