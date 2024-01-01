@@ -95,6 +95,8 @@ jobs:
         run: |
           mkdir -p var/cache/test
           chmod -R 777 var
+          mkdir -p config/jwt
+          chmod -R 777 config/jwt
 
       - name: Generate JWT key pair for test env
         run: composer jwt-gen-test
