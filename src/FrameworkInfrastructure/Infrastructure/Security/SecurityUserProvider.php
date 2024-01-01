@@ -15,15 +15,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
- * @implements PasswordUpgraderInterface<User>
+ * @implements UserProviderInterface<User>
  */
-class SecurityUserProvider implements UserProviderInterface, PasswordUpgraderInterface
+readonly class SecurityUserProvider implements UserProviderInterface, PasswordUpgraderInterface
 {
     public function __construct(
-        private readonly UserRepositoryInterface $userRepository,
-        private readonly EntityManagerInterface $entityManager,
-    ) {
-    }
+        private UserRepositoryInterface $userRepository,
+        private EntityManagerInterface $entityManager,
+    ) {}
 
     /**
      * Symfony calls this method if you use features like switch_user

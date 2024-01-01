@@ -33,7 +33,7 @@ class ConfirmRegistrationControllerTest extends BaseWebTestCase
         self::$client->request('POST', $this->router->generate('user_register'), [
             'username' => 'johnnyS',
             'plainPassword' => 'P4ssw@rd1234',
-            'email' => 'john@doe.fr',
+            'email' => 'johnny@s.fr',
         ]);
         self::assertQueuedEmailCount(1);
 
@@ -46,7 +46,7 @@ class ConfirmRegistrationControllerTest extends BaseWebTestCase
         $token = $matches[1];
 
         $tokenExpirationTime = self::getContainer()->getParameter('email_confirmation_token_expiration_delay');
-        CarbonImmutable::setTestNow(new \DateTimeImmutable(sprintf('now + %s minutes', $tokenExpirationTime)));
+        CarbonImmutable::setTestNow(new CarbonImmutable(sprintf('now + %s minutes', $tokenExpirationTime)));
         self::$client->request('GET', $this->router->generate('user_account_validation', [
             'token' => $token,
         ]));

@@ -20,8 +20,7 @@ class CreateUserHandler implements CommandHandlerInterface
         private readonly MailerInterface $mailer,
         private readonly TemporaryTokenGenerator $tokenGenerator,
         private readonly int $emailConfirmationTokenExpirationDelay
-    ) {
-    }
+    ) {}
 
     public function __invoke(CreateUserCommand $command): void
     {

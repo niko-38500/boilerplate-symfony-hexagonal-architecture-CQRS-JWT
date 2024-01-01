@@ -11,8 +11,7 @@ class PersisterManager implements PersisterManagerInterface
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager
-    ) {
-    }
+    ) {}
 
     public function save(object $entity, bool $flush = false): void
     {

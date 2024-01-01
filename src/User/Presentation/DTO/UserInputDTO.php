@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\User\Presentation\DTO;
 
-class UserInputDTO
+final readonly class UserInputDTO
 {
     public function __construct(
-        public readonly string $username,
-        public readonly string $email,
-        public readonly ?string $plainPassword = null
-    ) {
-    }
+        public string $username,
+        public string $email,
+        public ?string $plainPassword = null,
+    ) {}
 }

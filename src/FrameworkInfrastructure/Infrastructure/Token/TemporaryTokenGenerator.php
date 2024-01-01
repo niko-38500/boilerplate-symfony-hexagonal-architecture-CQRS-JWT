@@ -11,8 +11,7 @@ class TemporaryTokenGenerator
 {
     public function __construct(
         private readonly PersisterManagerInterface $persisterManager,
-    ) {
-    }
+    ) {}
 
     public function generate(int $delay): TemporaryToken
     {

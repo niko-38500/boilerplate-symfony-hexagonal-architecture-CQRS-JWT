@@ -9,12 +9,11 @@ use App\User\Domain\Command\CreateUserCommand;
 use App\User\Domain\Entity\User;
 use App\User\Presentation\DTO\UserInputDTO;
 
-class CreateUser
+readonly class CreateUser
 {
     public function __construct(
-        private readonly CommandBus $commandDispatcher
-    ) {
-    }
+        private CommandBus $commandDispatcher
+    ) {}
 
     public function execute(UserInputDTO $userDTO): void
     {
