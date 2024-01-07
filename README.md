@@ -10,8 +10,8 @@ This project can run either with the standard web development sever or with the 
 ## Roadmap
 - [ ] Improvement of the CI 
   - [ ] Avoid to run twice a pipeline when a pr is merged.
-  - [ ] Generate code coverage.
-  - [ ] Increase the amount of tests
+  - [x] Generate code coverage.
+  - [x] Increase the amount of tests
 - [ ] Implement the openApi specs and generate an openApi page with swagger-php
 - [ ] Implement a CD
 - [ ] Integration of blackfire for the monitoring of the app performance
@@ -70,7 +70,7 @@ Each domains will contains 3 directories
     └── Presentation
 ```
 
-Zoom in on a domain, let's take the example of the blog domain :
+Zoom into a domain, let's take the example of the blog domain :
 
 ```
 Blog
@@ -136,8 +136,11 @@ WIP: load the user from the JWT payload and not the db (safe because signature e
 
 - ```composer stan```: Run phpstan analysis
 - ```composer cs```: Run php cs fixer
+- ```composer tests```: Run the tests suits within php fpm docker container
 - ```composer qa```: Run the stan and cs command together
 - ```composer docker```: Get into the php fpm container
 - ```composer up```: Launch the docker nginx server
 - ```composer stop```: Stop the docker nginx server
-- ```composer rebuild-image```: rebuild the docker images
+- ```composer rebuild-image```: Rebuild the docker images
+- ```composer test-db```: Purge the test database and load fixtures
+- ```composer reset-db```: Purge the database and load fixtures

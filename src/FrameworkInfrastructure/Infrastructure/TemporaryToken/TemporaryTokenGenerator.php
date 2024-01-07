@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrameworkInfrastructure\Infrastructure\Token;
+namespace App\FrameworkInfrastructure\Infrastructure\TemporaryToken;
 
 use App\FrameworkInfrastructure\Domain\Repository\PersisterManagerInterface;
 use Carbon\CarbonImmutable;

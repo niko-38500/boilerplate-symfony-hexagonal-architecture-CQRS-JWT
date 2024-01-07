@@ -54,6 +54,9 @@ jobs:
 
   tests:
     name: Run test suits
+    needs:
+      - php-cs-fixer
+      - php-stan
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

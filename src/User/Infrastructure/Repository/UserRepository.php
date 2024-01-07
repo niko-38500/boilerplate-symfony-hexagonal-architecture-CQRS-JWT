@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace App\User\Infrastructure\Repository;
 
-use App\FrameworkInfrastructure\Infrastructure\Token\TemporaryToken;
 use App\User\Domain\Entity\User;
 use App\User\Domain\Repository\UserRepositoryInterface;
-use Carbon\CarbonImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 
-class UserRepository implements UserRepositoryInterface
+readonly class UserRepository implements UserRepositoryInterface
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager,
     ) {}
 
     public function findOneByEmail(string $email): ?User
@@ -42,28 +40,10 @@ class UserRepository implements UserRepositoryInterface
 
     public function findOneByTemporaryToken(string $token): ?User
     {
-        /** @var ?TemporaryToken $storedToken */
-        $storedToken = $this->entityManager->createQueryBuilder()
-            ->from(TemporaryToken::class, 't')
-            ->select('t')
-            ->where('t.token = :token')
-            ->andWhere('t.expiresAt > :now')
-            ->setParameters([
-                'token' => $token,
-                'now' => CarbonImmutable::now(),
-            ])
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-
-        if (!$storedToken) {
-            return null;
-        }
-
         return $this->createQueryBuilder()
             ->select('u')
             ->where('u.emailVerificationToken = :token')
-            ->setParameter('token', $storedToken->getToken())
+            ->setParameter('token', $token)
             ->getQuery()
             ->getOneOrNullResult()
         ;
