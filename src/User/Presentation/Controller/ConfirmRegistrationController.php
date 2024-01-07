@@ -36,9 +36,9 @@ class ConfirmRegistrationController extends AbstractController
         $response = $this->json([
             'createdAt' => time(),
             'status' => 'ok',
-            'code' => Response::HTTP_ACCEPTED,
+            'code' => Response::HTTP_OK,
             'message' => 'Votre compte à été validé avec succès',
-        ], Response::HTTP_ACCEPTED);
+        ], Response::HTTP_OK);
 
         $response->headers->setCookie(Cookie::create('user_id', $jwtToken, strtotime('now + 10 days')));
 

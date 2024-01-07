@@ -16,11 +16,11 @@ use Symfony\Component\Routing\Router;
  *
  * @coversNothing
  */
-class BaseWebTestCase extends WebTestCase
+abstract class BaseWebTestCase extends WebTestCase
 {
-    protected static ?KernelBrowser $client;
     protected ?EntityManagerInterface $entityManager;
     protected Router $router;
+    protected static ?KernelBrowser $client;
 
     public static function setUpBeforeClass(): void
     {
@@ -46,47 +46,47 @@ class BaseWebTestCase extends WebTestCase
         unset($this->entityManager);
     }
 
-    //    protected function getProfiler(): Profile
-    //    {
-    //        if ($profiler = self::$client->getProfile()) {
-    //            return $profiler;
-    //        }
-    //
-    //        throw new \LogicException(
-    //            'To get the profiler you must enable it first with "self::$client->enableProfiler()"'
-    //        );
-    //    }
-    //
-    //    /**
-    //     * @return array<int, array<string, mixed>>
-    //     */
-    //    protected function getProfilerDbQueries(): array
-    //    {
-    //        /** @var DoctrineDataCollector $db */
-    //        $db = $this->getProfiler()->getCollector('db');
-    //
-    //        return $this->filterFixturesAndTransactionDbQueries($db);
-    //    }
-    //
-    //    /**
-    //     * @return array<int, array<string, mixed>>
-    //     */
-    //    protected function filterFixturesAndTransactionDbQueries(DoctrineDataCollector $dataCollector): array
-    //    {
-    //        $queries = $dataCollector->getQueries();
-    //
-    //        return array_values(array_filter($queries['default'], function (array $query) {
-    //            if ('"START TRANSACTION"' === $query['sql'] || '"COMMIT"' === $query['sql']) {
-    //                return false;
-    //            }
-    //
-    //            foreach ($query['backtrace'] as $backtrace) {
-    //                if ('loadFixtures' === $backtrace['function']) {
-    //                    return false;
-    //                }
-    //            }
-    //
-    //            return true;
-    //        }));
-    //    }
+    protected function getProfiler(): Profile
+    {
+        if ($profiler = self::$client->getProfile()) {
+            return $profiler;
+        }
+
+        throw new \RuntimeException(
+            'To get the profiler you must enable it first with "self::$client->enableProfiler()"'
+        );
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    protected function getProfilerDbQueries(): array
+    {
+        /** @var DoctrineDataCollector $db */
+        $db = $this->getProfiler()->getCollector('db');
+
+        return $this->filterFixturesAndTransactionDbQueries($db);
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    protected function filterFixturesAndTransactionDbQueries(DoctrineDataCollector $dataCollector): array
+    {
+        $queries = $dataCollector->getQueries();
+
+        return array_values(array_filter($queries['default'], function (array $query) {
+            if ('"START TRANSACTION"' === $query['sql'] || '"COMMIT"' === $query['sql']) {
+                return false;
+            }
+
+            foreach ($query['backtrace'] as $backtrace) {
+                if ('loadFixtures' === $backtrace['function']) {
+                    return false;
+                }
+            }
+
+            return true;
+        }));
+    }
 }

@@ -20,8 +20,8 @@ doctrine:
                 type: xml
             ExpirationToken:
                 is_bundle: false
-                dir: '%kernel.project_dir%/src/FrameworkInfrastructure/Infrastructure/Token'
-                prefix: App\FrameworkInfrastructure\Infrastructure\Token
+                dir: '%kernel.project_dir%/src/FrameworkInfrastructure/Infrastructure/TemporaryToken'
+                prefix: App\FrameworkInfrastructure\Infrastructure\TemporaryToken
                 type: attribute
 
 when@test:

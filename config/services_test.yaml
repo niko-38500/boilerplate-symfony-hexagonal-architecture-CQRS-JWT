@@ -1,0 +1,7 @@
+services:
+  App\FrameworkInfrastructure\Infrastructure\Security\UserProvider:
+    public: true
+    autowire: true
+  Lexik\Bundle\JWTAuthenticationBundle\Security\Http\Authentication\AuthenticationSuccessHandler:
+    public: true
+    autowire: true
