@@ -9,8 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @internal
- *
- * @coversNothing
  */
 class ConfirmRegistrationControllerTest extends BaseWebTestCase
 {

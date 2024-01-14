@@ -22,18 +22,12 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
-    <coverage>
-        <report>
-            <clover outputFile="var/coverage/xml/clover-coverage.xml" />
-            <html outputDirectory="var/coverage/html" />
-        </report>
-    </coverage>
 
     <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
     </listeners>
 
-    <source>
+    <coverage>
         <include>
             <directory>src</directory>
         </include>
@@ -41,9 +35,6 @@
             <directory>src/FrameworkInfrastructure/Infrastructure/DataFixtures</directory>
             <file>src/FrameworkInfrastructure/Infrastructure/Security/SecurityUserProvider.php</file>
         </exclude>
-    </source>
-
-    <coverage>
         <report>
             <clover outputFile="var/coverage/xml/clover-coverage.xml" />
             <html outputDirectory="var/coverage/html" />

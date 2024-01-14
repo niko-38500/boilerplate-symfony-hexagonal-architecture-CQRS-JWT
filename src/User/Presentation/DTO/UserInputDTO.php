@@ -9,6 +9,6 @@ final readonly class UserInputDTO
     public function __construct(
         public string $username,
         public string $email,
-        public ?string $plainPassword = null,
+        public string $plainPassword,
     ) {}
 }

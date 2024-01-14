@@ -5,7 +5,9 @@ RUN apk add --update linux-headers &&\
     apk add --no-cache $PHPIZE_DEPS git zip unzip libzip-dev libpq-dev &&\
     pecl install xdebug &&\
     docker-php-ext-install pdo pgsql pdo_pgsql &&\
-    docker-php-ext-enable pdo pgsql pdo_pgsql xdebug
+    docker-php-ext-enable pdo pgsql pdo_pgsql xdebug && \
+    mkdir -p "/opt/phpstorm-coverage" && \
+    chmod a+rw "/opt/phpstorm-coverage"
 
 COPY ./conf /usr/local/etc/php/conf.d/
 
