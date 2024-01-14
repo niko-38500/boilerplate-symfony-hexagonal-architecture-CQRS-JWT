@@ -9,8 +9,6 @@ use App\User\Infrastructure\Email\UserRegistrationConfirmationEmail;
 
 /**
  * @internal
- *
- * @coversNothing
  */
 class UserRegistrationFullWorkflowTest extends BaseWebTestCase
 {

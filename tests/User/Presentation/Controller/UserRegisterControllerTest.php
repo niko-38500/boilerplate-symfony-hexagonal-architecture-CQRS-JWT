@@ -7,8 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @internal
- *
- * @coversNothing
  */
 class UserRegisterControllerTest extends BaseWebTestCase
 {
