@@ -16,7 +16,7 @@ class UserRegistrationFullWorkflowTest extends BaseWebTestCase
     {
         $userData = [
             'username' => 'lucky luciano',
-            'plainPassword' => 'P4ssw@rd1234',
+            'plainPassword' => 'StandardP4ssw@rd!',
             'email' => 'lauren@luciano.mafia',
         ];
 
