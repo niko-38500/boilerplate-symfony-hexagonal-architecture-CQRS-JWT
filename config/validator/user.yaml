@@ -21,5 +21,5 @@ App\User\Domain\Entity\User:
       - NotCompromisedPassword:
           message: Votre mot de passe semble compromis, veuillez en changer
       - PasswordStrength:
-          message: Votre mot de passe n'est pas assez solid
-          minScore: 1
+          message: Votre mot de passe n'est pas assez fort, il doit comporter des majuscules, des chiffres, des minuscules et des caractères spéciaux
+          minScore: !php/const Symfony\Component\Validator\Constraints\PasswordStrength::STRENGTH_MEDIUM

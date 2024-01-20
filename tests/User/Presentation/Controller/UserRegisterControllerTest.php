@@ -29,7 +29,7 @@ class UserRegisterControllerTest extends BaseWebTestCase
 
         $expectedErrors = [
             'username' => 'Votre nom d\'utilisateur doit faire au moins 3 caractères',
-            'plainPassword' => 'Votre mot de passe n\'est pas assez solid',
+            'plainPassword' => 'Votre mot de passe n\'est pas assez fort, il doit comporter des majuscules, des chiffres, des minuscules et des caractères spéciaux',
             'email' => 'Veuillez remplir un email',
         ];
 
@@ -42,7 +42,7 @@ class UserRegisterControllerTest extends BaseWebTestCase
     {
         $userData = [
             'username' => 'lucky luciano',
-            'plainPassword' => 'P4ssw@rd1234',
+            'plainPassword' => 'P4ss!w@rd12$3aGa4',
             'email' => 'lauren@luciano.mafia',
         ];
 

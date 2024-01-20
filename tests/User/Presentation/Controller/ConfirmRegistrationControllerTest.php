@@ -30,7 +30,7 @@ class ConfirmRegistrationControllerTest extends BaseWebTestCase
     {
         self::$client->request('POST', $this->router->generate('user_register'), [
             'username' => 'johnnyS',
-            'plainPassword' => 'P4ssw@rd1234',
+            'plainPassword' => 'StandardP4ssw@rd!',
             'email' => 'johnny@s.fr',
         ]);
         self::assertQueuedEmailCount(1);
