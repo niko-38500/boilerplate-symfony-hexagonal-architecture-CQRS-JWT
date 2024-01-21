@@ -12,7 +12,7 @@ This project can run either with the standard web development sever or with the 
   - [ ] Avoid to run twice a pipeline when a pr is merged.
   - [x] Generate code coverage.
   - [x] Increase the amount of tests
-- [ ] Implement the openApi specs and generate an openApi page with swagger-php
+- [x] Implement the openApi specs and generate an openApi page with swagger ui
 - [ ] Implement a CD
 - [ ] Integration of blackfire for the monitoring of the app performance
 - [ ] Integration of a tool like sentry to monitor errors
@@ -102,6 +102,62 @@ Blog
 Some people also use an application directory, but personally, I prefer not to because I think there is already a lot of abstraction. Therefore, I don't think it's worth adding more.
 
 Also, I don't use the concept of request and response boundary which are juste simple value object that transport the data from the presentation layer to the domain layer and vice versa, I prefer create DTOs to convert the request into owned objects and for the response return something from the use cases if necessary and build the response from the controller.
+
+### Open API
+
+This project auto generate a swagger page but you might want to enhance this documentation which very basic without 
+further attribute documentation
+
+To make it easier to write your documentation, you can find here some templates to add to your controllers 
+(working on a solution to make it automatically)
+
+#### Templates
+
+
+**GET endpoint :**
+```php
+#[
+    Route('/api/v', name: '', methods: ['GET']),
+    OA\Get(
+        description: '',
+        summary: '',
+        parameters: [
+            new OA\Parameter(
+                name: '',
+                description: '',
+                in: '',
+                required: 
+            ),
+        ],
+        responses: [
+            new OA\Response(response: 200, description: ''),
+            new OA\Response(response: 400, description: ''),
+        ]
+    ),
+    OA\Tag(name: '', description: '')
+]
+```
+
+**POST endpoint :**
+
+```php
+#[
+    Route('/api/v', name: '', methods: ['POST']),
+    OA\Post(
+        description: '',
+        summary: '',
+        requestBody: new OA\RequestBody(required: true),
+        responses: [
+            new OA\Response(response: 200, description: 'User account is validated'),
+            new OA\Response(response: 404, description: 'Validation token is not present or not found'),
+        ]
+    ),
+    OA\Tag(name: 'User', description: 'Actions related to the user')
+]
+```
+
+Be sure to add the ```#[MapRequestPayload]``` attribute with a DTO on your endpoint method signature to automatically 
+add the "requestBody" doc
 
 ### Event listeners
 
