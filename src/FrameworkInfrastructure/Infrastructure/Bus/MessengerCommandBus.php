@@ -8,10 +8,10 @@ use App\FrameworkInfrastructure\Domain\Command\CommandBus;
 use App\FrameworkInfrastructure\Domain\Command\CommandInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-class MessengerCommandBus implements CommandBus
+final readonly class MessengerCommandBus implements CommandBus
 {
     public function __construct(
-        private readonly MessageBusInterface $commandBus
+        private MessageBusInterface $commandBus,
     ) {}
 
     public function dispatch(CommandInterface $command): void

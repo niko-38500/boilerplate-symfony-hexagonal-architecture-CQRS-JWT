@@ -14,14 +14,13 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[
-    Route('/api/v1/user/registration', name: 'user_register', methods: ['POST']),
+    Route('/api/v1/user/login/registration', name: 'user_register', methods: ['POST']),
     OA\Post(
         description: 'Register a user',
         summary: 'Register a user',
         requestBody: new OA\RequestBody(required: true),
         responses: [
-            new OA\Response(response: 200, description: 'User account is validated'),
-            new OA\Response(response: 404, description: 'Validation token is not present or not found'),
+            new OA\Response(response: 200, description: 'User account is created'),
         ]
     ),
     OA\Tag(name: 'User', description: 'Actions related to the user')

@@ -9,10 +9,11 @@ use App\FrameworkInfrastructure\Domain\Repository\PersisterManagerInterface;
 use App\FrameworkInfrastructure\Infrastructure\TemporaryToken\TemporaryTokenGenerator;
 use App\User\Domain\Command\CreateUserCommand;
 use App\User\Infrastructure\Email\UserRegistrationConfirmationEmail;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-readonly class CreateUserHandler implements CommandHandlerInterface
+final readonly class CreateUserCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
         private PersisterManagerInterface $persisterManager,
@@ -22,6 +23,9 @@ readonly class CreateUserHandler implements CommandHandlerInterface
         private int $emailConfirmationTokenExpirationDelay,
     ) {}
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     public function __invoke(CreateUserCommand $command): void
     {
         $user = $command->user;

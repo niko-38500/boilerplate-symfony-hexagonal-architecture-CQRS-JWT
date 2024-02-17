@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @internal
  */
-class UserRegisterControllerTest extends BaseWebTestCase
+class UserRegistrationControllerTest extends BaseWebTestCase
 {
     public function testCreateUserWithValidationError(): void
     {
@@ -17,10 +17,12 @@ class UserRegisterControllerTest extends BaseWebTestCase
             $this->router->generate('user_register'),
             [
                 'username' => '',
-                'plainPassword' => '',
+                'plainPassword' => 'tooweak',
                 'email' => '',
             ]
         );
+
+        self::assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
 
         $response = json_decode(self::$client->getResponse()->getContent(), true);
         self::assertArrayHasKey('errors', $response);
@@ -42,7 +44,7 @@ class UserRegisterControllerTest extends BaseWebTestCase
     {
         $userData = [
             'username' => 'lucky luciano',
-            'plainPassword' => 'P4ss!w@rd12$3aGa4',
+            'plainPassword' => 'Current7P@ssw0rd0!',
             'email' => 'lauren@luciano.mafia',
         ];
 

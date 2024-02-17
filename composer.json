@@ -10,6 +10,8 @@
         "doctrine/doctrine-bundle": "^2.11",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^2.17",
+        "knpuniversity/oauth2-client-bundle": "^2.18",
+        "league/oauth2-github": "^3.1",
         "lexik/jwt-authentication-bundle": "^2.2",
         "nesbot/carbon": "3.x-dev",
         "phpdocumentor/reflection-docblock": "^5.3",

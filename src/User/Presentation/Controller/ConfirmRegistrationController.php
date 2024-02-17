@@ -15,15 +15,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[
-    Route('/api/v1/user/registration/validation', name: 'user_account_validation', methods: ['GET']),
+    Route('/api/v1/user/login/registration/validation', name: 'user_account_validation', methods: ['GET']),
     OA\Get(
         description: 'Validate a user account from a temporary token (30 minutes validity)',
         summary: 'Validate a new user account',
         parameters: [
             new OA\Parameter(
-                name: 'query',
+                name: 'token',
                 description: 'Generated temporary token linked to the account confirmation mail',
-                in: 'path',
+                in: 'query',
                 required: true
             ),
         ],

@@ -8,10 +8,10 @@ use App\FrameworkInfrastructure\Domain\Jwt\JwtGeneratorInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class JwtGenerator implements JwtGeneratorInterface
+final readonly class JwtGenerator implements JwtGeneratorInterface
 {
     public function __construct(
-        private readonly JWTTokenManagerInterface $JWTTokenManager
+        private JWTTokenManagerInterface $JWTTokenManager,
     ) {}
 
     public function generate(UserInterface $user): string

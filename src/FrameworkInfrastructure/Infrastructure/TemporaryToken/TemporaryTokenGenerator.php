@@ -7,10 +7,10 @@ namespace App\FrameworkInfrastructure\Infrastructure\TemporaryToken;
 use App\FrameworkInfrastructure\Domain\Repository\PersisterManagerInterface;
 use Carbon\CarbonImmutable;
 
-class TemporaryTokenGenerator
+final readonly class TemporaryTokenGenerator
 {
     public function __construct(
-        private readonly PersisterManagerInterface $persisterManager,
+        private PersisterManagerInterface $persisterManager,
     ) {}
 
     public function generate(int $delay): TemporaryToken
