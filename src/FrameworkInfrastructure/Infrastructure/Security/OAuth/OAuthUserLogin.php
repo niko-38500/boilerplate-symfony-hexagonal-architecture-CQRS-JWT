@@ -12,7 +12,7 @@ use App\User\Domain\Repository\UserRepositoryInterface;
 class OAuthUserLogin
 {
     /** @var array<string, string>  */
-    public const array PROVIDER_ID_PROPERTY_PASS = [
+    public const array PROVIDER_ID_PROPERTY_PATH = [
         'github' => 'githubId'
     ];
 
@@ -23,7 +23,7 @@ class OAuthUserLogin
 
     public function loginUser(ResourceOwnerDTO $resourceOwner): User
     {
-        if (!array_key_exists($resourceOwner->currentProvider, self::PROVIDER_ID_PROPERTY_PASS)) {
+        if (!array_key_exists($resourceOwner->currentProvider, self::PROVIDER_ID_PROPERTY_PATH)) {
             throw new \RuntimeException(sprintf(
                 'To use the %s provider you have to define the property to fetch in the class %s',
                 $resourceOwner->currentProvider,
@@ -31,10 +31,10 @@ class OAuthUserLogin
             ));
         }
 
-        if (!property_exists(User::class, self::PROVIDER_ID_PROPERTY_PASS[$resourceOwner->currentProvider])) {
+        if (!property_exists(User::class, self::PROVIDER_ID_PROPERTY_PATH[$resourceOwner->currentProvider])) {
             throw new \RuntimeException(sprintf(
                 'Property %s does not exists on class %s. please verify that %s::PROVIDER_ID_PROPERTY_PASS has the right property value for the key %s',
-                self::PROVIDER_ID_PROPERTY_PASS[$resourceOwner->currentProvider],
+                self::PROVIDER_ID_PROPERTY_PATH[$resourceOwner->currentProvider],
                 User::class,
                 self::class,
                 $resourceOwner->currentProvider
@@ -54,7 +54,7 @@ class OAuthUserLogin
     {
         $user = (new User($resourceOwner->username, $resourceOwner->email))
             ->setProviderId(
-                self::PROVIDER_ID_PROPERTY_PASS[$resourceOwner->currentProvider],
+                self::PROVIDER_ID_PROPERTY_PATH[$resourceOwner->currentProvider],
                 $resourceOwner->providerId
             )
             ->validateAccount();
@@ -71,7 +71,7 @@ class OAuthUserLogin
         if ($user) {
             $user
                 ->setProviderId(
-                    self::PROVIDER_ID_PROPERTY_PASS[$resourceOwner->currentProvider],
+                    self::PROVIDER_ID_PROPERTY_PATH[$resourceOwner->currentProvider],
                     $resourceOwner->providerId
                 )
                 ->validateAccount();
@@ -84,7 +84,7 @@ class OAuthUserLogin
 
     private function getUserFromProviderId(ResourceOwnerDTO $resourceOwner): ?User
     {
-        $propertyPass = self::PROVIDER_ID_PROPERTY_PASS[$resourceOwner->currentProvider];
+        $propertyPass = self::PROVIDER_ID_PROPERTY_PATH[$resourceOwner->currentProvider];
 
         return $this->userRepository->findOneByAuthenticatorProviderId($propertyPass, $resourceOwner->providerId);
     }
