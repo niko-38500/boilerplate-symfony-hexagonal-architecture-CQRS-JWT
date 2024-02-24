@@ -91,6 +91,7 @@
         "up": "docker-compose up -d",
         "stop": "docker-compose stop",
         "docker": "docker exec -it php sh",
+        "reset-docker": "docker rm -f $(docker ps -qa) && composer up",
         "jwt-gen": "docker exec php php bin/console lexik:jwt:generate-keypair",
         "jwt-gen-test": "docker exec php php bin/console lexik:jwt:generate-keypair -e test",
         "rebuild-image": "docker-compose build",

@@ -24,7 +24,7 @@ services:
             - '../src/Kernel.php'
 
 
-    App\FrameworkInfrastructure\Infrastructure\Security\OAuth\Logger\AbstractOAuthLogger:
+    App\FrameworkInfrastructure\Infrastructure\Security\OAuth\LoginProvider\AbstractOAuthLoginProvider:
         factory: '@App\FrameworkInfrastructure\Infrastructure\Security\OAuth\Factory\OAuthLoggerFactory'
 
     _instanceof:
@@ -34,5 +34,5 @@ services:
         App\FrameworkInfrastructure\Domain\Query\QueryHandlerInterface:
             tags:
                 - { name: messenger.message_handler, bus: query.bus }
-        App\FrameworkInfrastructure\Infrastructure\Security\OAuth\Logger\AbstractOAuthLogger:
+        App\FrameworkInfrastructure\Infrastructure\Security\OAuth\LoginProvider\AbstractOAuthLoginProvider:
             lazy: true
