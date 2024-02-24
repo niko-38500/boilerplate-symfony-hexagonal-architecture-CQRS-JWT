@@ -10,7 +10,7 @@ use App\FrameworkInfrastructure\Infrastructure\TemporaryToken\TemporaryToken;
 use App\User\Domain\Command\RemoveTemporaryTokenCommand;
 use Doctrine\ORM\EntityManagerInterface;
 
-readonly class RemoveTemporaryTokenCommandHandler implements CommandHandlerInterface
+final readonly class RemoveTemporaryTokenCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
         private EntityManagerInterface $entityManager,

@@ -12,7 +12,7 @@ use App\User\Presentation\DTO\UserInputDTO;
 readonly class CreateUser
 {
     public function __construct(
-        private CommandBus $commandDispatcher
+        private CommandBus $commandDispatcher,
     ) {}
 
     public function execute(UserInputDTO $userDTO): void

@@ -4,12 +4,13 @@
 
         <field name="username" />
         <field name="email" unique="true" />
-        <field name="password" />
+        <field name="password" nullable="true" />
         <field name="isAccountValidated" type="boolean">
             <options>
                 <option name="default">false</option>
             </options>
         </field>
         <field name="emailVerificationToken" nullable="true" />
+        <field name="githubId" nullable="true" />
     </entity>
 </doctrine-mapping>

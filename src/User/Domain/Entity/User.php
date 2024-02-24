@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace App\User\Domain\Entity;
 
+use Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class User implements UserInterface, PasswordAuthenticatedUserInterface // TODO find a way to decoupling the user entity from the external packages
+class User implements UserInterface, PasswordAuthenticatedUserInterface, JWTUserInterface // TODO find a way to decoupling the user entity from the external packages
 {
     private string $uuid;
-    private string $password;
+    private ?string $password;
     private bool $isAccountValidated = false;
     private ?string $plainPassword;
     private ?string $emailVerificationToken;
+    private ?string $githubId;
 
     public function __construct(
         private readonly string $username,
@@ -28,6 +30,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface // TODO 
     public function getUuid(): string
     {
         return $this->uuid;
+    }
+
+    public function setUuid(string $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    public function getGithubId(): ?string
+    {
+        return $this->githubId;
+    }
+
+    public function setProviderId(string $providerIdProperty, string $providerId): self
+    {
+        $this->{$providerIdProperty} = $providerId;
+
+        return $this;
     }
 
     public function getEmailVerificationToken(): ?string
@@ -67,14 +88,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface // TODO 
         return $this->email;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword(string $newHashedPassword): self
+    public function setPassword(string $hashedPassword): self
     {
-        $this->password = $newHashedPassword;
+        $this->password = $hashedPassword;
 
         return $this;
     }
@@ -91,6 +112,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface // TODO 
 
     public function getUserIdentifier(): string
     {
-        return $this->email;
+        return $this->getEmail();
+    }
+
+    /**
+     * @param string                $username
+     * @param array<string, string> $payload
+     */
+    public static function createFromPayload($username, array $payload): self
+    {
+        $user = (new self($payload['username'], $payload['email']))->setUuid($payload['uuid']);
+
+        if ($payload['isAccountValidated']) {
+            $user->validateAccount();
+        }
+
+        return $user;
     }
 }

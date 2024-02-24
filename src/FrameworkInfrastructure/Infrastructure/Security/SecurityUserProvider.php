@@ -7,7 +7,6 @@ namespace App\FrameworkInfrastructure\Infrastructure\Security;
 use App\User\Domain\Entity\User;
 use App\User\Domain\Repository\UserRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -55,13 +54,7 @@ readonly class SecurityUserProvider implements UserProviderInterface, PasswordUp
      */
     public function refreshUser(UserInterface $user): UserInterface
     {
-        if (!$user instanceof User) {
-            throw new UnsupportedUserException(sprintf('Invalid user class "%s".', get_class($user)));
-        }
-
-        $this->entityManager->refresh($user);
-
-        return $user;
+        throw new \RuntimeException('This API is stateless if this methode is called check your configuration');
     }
 
     /**

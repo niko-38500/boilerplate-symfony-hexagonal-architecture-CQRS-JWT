@@ -7,6 +7,7 @@ namespace App\User\Infrastructure\Repository;
 use App\User\Domain\Entity\User;
 use App\User\Domain\Repository\UserRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 
 readonly class UserRepository implements UserRepositoryInterface
@@ -44,6 +45,20 @@ readonly class UserRepository implements UserRepositoryInterface
             ->select('u')
             ->where('u.emailVerificationToken = :token')
             ->setParameter('token', $token)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findOneByAuthenticatorProviderId(string $propertyPass, string $authenticatorId): ?User
+    {
+        return $this->createQueryBuilder()
+            ->select('u')
+            ->where(sprintf('u.%s = :authenticatorProviderId', $propertyPass))
+            ->setParameter('authenticatorProviderId', $authenticatorId)
             ->getQuery()
             ->getOneOrNullResult()
         ;
