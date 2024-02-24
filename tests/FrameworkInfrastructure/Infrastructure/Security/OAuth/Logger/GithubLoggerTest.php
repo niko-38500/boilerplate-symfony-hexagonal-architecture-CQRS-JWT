@@ -1,25 +1,25 @@
 <?php
 
-namespace App\Tests\FrameworkInfrastructure\Infrastructure\Security\OAuth;
+namespace App\Tests\FrameworkInfrastructure\Infrastructure\Security\OAuth\Logger;
 
-use App\FrameworkInfrastructure\Infrastructure\Security\OAuth\DTO\ResourceOwnerDTO;
-use App\FrameworkInfrastructure\Infrastructure\Security\OAuth\OAuthUserLogin;
+use App\FrameworkInfrastructure\Infrastructure\Security\OAuth\LoginProvider\GithubLoginProvider;
 use App\Tests\Utils\BaseKernelTestCase;
 use App\User\Domain\Entity\User;
 use App\User\Domain\Repository\UserRepositoryInterface;
+use League\OAuth2\Client\Provider\GithubResourceOwner;
 
 /**
  * @internal
  */
-class OAuthUserLoginTest extends BaseKernelTestCase
+class GithubLoggerTest extends BaseKernelTestCase
 {
-    private OAuthUserLogin $oAuthUserLogin;
+    private GithubLoginProvider $oAuthUserLogin;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->oAuthUserLogin = self::getContainer()->get(OAuthUserLogin::class);
+        $this->oAuthUserLogin = self::getContainer()->get(GithubLoginProvider::class);
     }
 
     public function testRetrieveUserFromProviderId(): void
@@ -35,12 +35,7 @@ class OAuthUserLoginTest extends BaseKernelTestCase
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $resourceOwner = new ResourceOwnerDTO(
-            'johnnyD',
-            'john@doe.io',
-            '1',
-            'github'
-        );
+        $resourceOwner = $this->createResourceOwner(1, 'john@doe.io', 'johnnyD');
 
         $updatedUser = $this->oAuthUserLogin->loginUser($resourceOwner);
 
@@ -58,12 +53,7 @@ class OAuthUserLoginTest extends BaseKernelTestCase
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $resourceOwner = new ResourceOwnerDTO(
-            'johnnyD',
-            'johnny@doe.com',
-            '1',
-            'github'
-        );
+        $resourceOwner = $this->createResourceOwner(1, 'johnny@doe.com', 'johnnyD');
 
         $updatedUser = $this->oAuthUserLogin->loginUser($resourceOwner);
 
@@ -74,12 +64,7 @@ class OAuthUserLoginTest extends BaseKernelTestCase
 
     public function testUserIsCreatedWhenNotExists(): void
     {
-        $resourceOwner = new ResourceOwnerDTO(
-            'johnnyD',
-            'johnny@doe.com',
-            '1',
-            'github'
-        );
+        $resourceOwner = $this->createResourceOwner(1, 'johnny@doe.com', 'johnnyD');
 
         $newUser = $this->oAuthUserLogin->loginUser($resourceOwner);
 
@@ -93,17 +78,14 @@ class OAuthUserLoginTest extends BaseKernelTestCase
         self::assertEquals($newUser, $fetchedUser);
     }
 
-    public function testExceptionOnNonExistingProvider(): void
+    private function createResourceOwner(int $id, string $email, string $nickname): GithubResourceOwner
     {
-        $resourceOwner = new ResourceOwnerDTO(
-            'johnnyD',
-            'johnny@doe.com',
-            '1',
-            'not-exists'
-        );
+        $resourceOwner = $this->createMock(GithubResourceOwner::class);
 
-        $this->expectException(\RuntimeException::class);
+        $resourceOwner->expects(self::once())->method('getId')->willReturn($id);
+        $resourceOwner->expects(self::once())->method('getEmail')->willReturn($email);
+        $resourceOwner->expects(self::once())->method('getNickname')->willReturn($nickname);
 
-        $this->oAuthUserLogin->loginUser($resourceOwner);
+        return $resourceOwner;
     }
 }

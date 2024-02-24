@@ -23,6 +23,10 @@ services:
             - '../src/*/**/Entity/'
             - '../src/Kernel.php'
 
+
+    App\FrameworkInfrastructure\Infrastructure\Security\OAuth\Logger\AbstractOAuthLogger:
+        factory: '@App\FrameworkInfrastructure\Infrastructure\Security\OAuth\Factory\OAuthLoggerFactory'
+
     _instanceof:
         App\FrameworkInfrastructure\Domain\Command\CommandHandlerInterface:
             tags:
@@ -30,3 +34,5 @@ services:
         App\FrameworkInfrastructure\Domain\Query\QueryHandlerInterface:
             tags:
                 - { name: messenger.message_handler, bus: query.bus }
+        App\FrameworkInfrastructure\Infrastructure\Security\OAuth\Logger\AbstractOAuthLogger:
+            lazy: true

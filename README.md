@@ -209,12 +209,11 @@ fill them into the ```config/packages/knpu_oauth2_client.yaml``` file (not fill 
 Then let's integrate this provider into your app :
 
 1. Install from composer the provider package (cf https://github.com/knpuniversity/oauth2-client-bundle?tab=readme-ov-file#step-1-download-the-client-library)
-2. Create a ResourceOwner transformer, it should transform a specific client resourceOwner (e.g. GithubClientResourceOwner) to an application understandable DTO (cf ```App\FrameworkInfrastructure\Infrastructure\Security\OAuth\ClientTransformer\GithubResourceOwnerTransformer```)
-3. Register your transformer into ```App\FrameworkInfrastructure\Infrastructure\Security\OAuth\Factory\OAuthClientTransformerFactory```
-   1. Fill the constant ```AVAILABLE_TRANSFORMERS``` the value must match the provider in ```config/packages/knpu_oauth2_client.yaml``` the key could be whatever you want.
-   2. Add to the "match" statement your transformer previously created (the constant allow to notify the available transformer on errors)
-4. In the User entity add a column for the id of your current provider id (e.g. googleId, appleId and so on) make the property as string to avoid inconsistency between the different providers id indeed some provider will use an integer and maybe some others a UUID
-5. Add the previously added property into the constant ```App\FrameworkInfrastructure\Infrastructure\Security\OAuth\OAuthUserLogin::PROVIDER_ID_PROPERTY_PATH```, the key should be the provider name and the value the property path on the user object
+2. Create an OAuthLogger by creating a class that extends ```App\FrameworkInfrastructure\Infrastructure\Security\OAuth\Logger\AbstractOAuthLogger.php``` and implements its methods (cf ```App\FrameworkInfrastructure\Infrastructure\Security\OAuth\Logger\GithubLogger```)
+3. Register your logger into the factory ```App\FrameworkInfrastructure\Infrastructure\Security\OAuth\Factory\OAuthLoggerFactory```
+   1. Fill the constant ```AVAILABLE_LOGGER``` the value must match the provider in ```config/packages/knpu_oauth2_client.yaml``` the key could be whatever you want.
+   2. Add to the "match" statement your logger previously created (the constant allow to notify the available loggers on errors)
+4. In the User entity add a column for the id of your current provider id (e.g. googleId, appleId and so on) make the property as string to avoid inconsistency between the different providers id indeed the providers could use an integer or maybe something else as a UUID
 
 And that it with this procedure you will be able to authenticate with your new provider
 
