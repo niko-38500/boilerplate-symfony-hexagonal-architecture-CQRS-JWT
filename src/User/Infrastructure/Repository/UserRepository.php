@@ -60,7 +60,8 @@ readonly class UserRepository implements UserRepositoryInterface
             ->where(sprintf('u.%s = :authenticatorProviderId', $propertyPass))
             ->setParameter('authenticatorProviderId', $authenticatorId)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+        ;
     }
 
     private function createQueryBuilder(): QueryBuilder

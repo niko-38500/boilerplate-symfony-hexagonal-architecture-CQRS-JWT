@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\User\Presentation\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Attribute\Route;
 use OpenApi\Attributes as OA;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[
     Route('/api/v1/oauth/check/{authenticator}', name: 'oauth_check', methods: ['GET'], stateless: true),
@@ -30,7 +29,5 @@ use OpenApi\Attributes as OA;
 ]
 class OauthLoginCheckController extends AbstractController
 {
-    public function __invoke(): void
-    {
-    }
+    public function __invoke(): void {}
 }

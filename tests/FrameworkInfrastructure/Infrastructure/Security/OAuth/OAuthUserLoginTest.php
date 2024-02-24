@@ -8,6 +8,9 @@ use App\Tests\Utils\BaseKernelTestCase;
 use App\User\Domain\Entity\User;
 use App\User\Domain\Repository\UserRepositoryInterface;
 
+/**
+ * @internal
+ */
 class OAuthUserLoginTest extends BaseKernelTestCase
 {
     private OAuthUserLogin $oAuthUserLogin;
@@ -27,7 +30,8 @@ class OAuthUserLoginTest extends BaseKernelTestCase
         );
         $user
             ->setProviderId('githubId', '1')
-            ->validateAccount();
+            ->validateAccount()
+        ;
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 

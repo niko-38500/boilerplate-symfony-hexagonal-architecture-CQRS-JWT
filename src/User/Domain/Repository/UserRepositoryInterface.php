@@ -13,5 +13,6 @@ interface UserRepositoryInterface
     public function findOneByEmailValidated(string $email): ?User;
 
     public function findOneByTemporaryToken(string $token): ?User;
+
     public function findOneByAuthenticatorProviderId(string $propertyPass, string $authenticatorId): ?User;
 }

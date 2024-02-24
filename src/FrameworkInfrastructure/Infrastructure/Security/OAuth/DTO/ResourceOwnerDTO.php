@@ -11,5 +11,5 @@ readonly class ResourceOwnerDTO
         public string $email,
         public string $providerId,
         public string $currentProvider
-    ) { }
+    ) {}
 }

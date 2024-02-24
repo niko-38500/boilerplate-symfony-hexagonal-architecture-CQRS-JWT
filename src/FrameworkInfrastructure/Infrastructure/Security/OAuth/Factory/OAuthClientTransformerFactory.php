@@ -10,6 +10,7 @@ use App\FrameworkInfrastructure\Infrastructure\Security\OAuth\ClientTransformer\
 
 class OAuthClientTransformerFactory
 {
+    /** @var string[] */
     public const array AVAILABLE_TRANSFORMERS = ['github' => 'github'];
 
     /**

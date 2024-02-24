@@ -11,9 +11,9 @@ use App\User\Domain\Repository\UserRepositoryInterface;
 
 class OAuthUserLogin
 {
-    /** @var array<string, string>  */
+    /** @var array<string, string> */
     public const array PROVIDER_ID_PROPERTY_PATH = [
-        'github' => 'githubId'
+        'github' => 'githubId',
     ];
 
     public function __construct(
@@ -57,7 +57,8 @@ class OAuthUserLogin
                 self::PROVIDER_ID_PROPERTY_PATH[$resourceOwner->currentProvider],
                 $resourceOwner->providerId
             )
-            ->validateAccount();
+            ->validateAccount()
+        ;
 
         $this->persisterManager->save($user, true);
 
@@ -74,7 +75,8 @@ class OAuthUserLogin
                     self::PROVIDER_ID_PROPERTY_PATH[$resourceOwner->currentProvider],
                     $resourceOwner->providerId
                 )
-                ->validateAccount();
+                ->validateAccount()
+            ;
 
             $this->persisterManager->save($user, true);
         }

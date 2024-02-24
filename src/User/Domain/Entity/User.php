@@ -46,7 +46,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JWTUser
 
     public function setProviderId(string $providerIdProperty, string $providerId): self
     {
-        $this->$providerIdProperty = $providerId;
+        $this->{$providerIdProperty} = $providerId;
 
         return $this;
     }
@@ -116,7 +116,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, JWTUser
     }
 
     /**
-     * @param string $username
+     * @param string                $username
      * @param array<string, string> $payload
      */
     public static function createFromPayload($username, array $payload): self

@@ -58,15 +58,15 @@ class OauthAuthenticator extends OAuth2Authenticator
         $user = $this->oAuthUserLogin->loginUser($resourceOwner);
 
         return new SelfValidatingPassport(
-            new UserBadge($user->getUserIdentifier(), static fn() => $user)
+            new UserBadge($user->getUserIdentifier(), static fn () => $user)
         );
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         return new JsonResponse([
-            'message'  => 'Authentication success',
-            'token' => $this->tokenGenerator->generate($token->getUser())
+            'message' => 'Authentication success',
+            'token' => $this->tokenGenerator->generate($token->getUser()),
         ]);
     }
 
