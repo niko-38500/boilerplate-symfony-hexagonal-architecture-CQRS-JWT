@@ -18,6 +18,11 @@ abstract class BaseKernelTestCase extends KernelTestCase
     protected ?EntityManagerInterface $entityManager;
     protected Router $router;
 
+    public static function tearDownAfterClass(): void
+    {
+        self::ensureKernelShutdown();
+    }
+
     public function setUp(): void
     {
         $this->entityManager = self::getContainer()->get(EntityManagerInterface::class);

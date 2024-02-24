@@ -43,6 +43,7 @@ abstract class BaseWebTestCase extends WebTestCase
 
     public function tearDown(): void
     {
+        $this->entityManager->close();
         unset($this->entityManager);
     }
 
