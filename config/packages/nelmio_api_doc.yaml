@@ -3,6 +3,7 @@ when@dev:
         areas:
             path_patterns:
                 - ^/api(?!/doc$)
+
         documentation:
             info:
                 title: My App
@@ -18,7 +19,6 @@ when@dev:
                         summary: Login
                         requestBody:
                             required: true
-
                             content:
                                 application/json:
                                     schema:
