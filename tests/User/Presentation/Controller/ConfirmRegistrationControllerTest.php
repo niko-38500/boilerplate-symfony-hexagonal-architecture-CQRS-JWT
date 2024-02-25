@@ -33,6 +33,7 @@ class ConfirmRegistrationControllerTest extends BaseWebTestCase
             'plainPassword' => 'StandardP4ssw@rd!',
             'email' => 'johnny@s.fr',
         ]);
+
         self::assertQueuedEmailCount(1);
 
         /** @var UserRegistrationConfirmationEmail $email */

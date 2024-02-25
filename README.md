@@ -197,6 +197,7 @@ connection page, so to make this auth possible we should in a first time fetch t
 Then you should redirect to your front end page that will resend a request to the api to finish the registration process.
 
 Here a sequence diagram of the workflow.
+
 ![oAuth_workflow_sequence_diagram.png](doc%2FoAuth_workflow_sequence_diagram.png)
 
 #### Add an authenticator provider

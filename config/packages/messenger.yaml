@@ -7,24 +7,32 @@ framework:
                     - App\FrameworkInfrastructure\Infrastructure\Middleware\ValidationMiddleware
             query.bus: ~
 
-        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
-        # failure_transport: failed
+        failure_transport: failed
 
         transports:
-            # https://symfony.com/doc/current/messenger.html#transport-configuration
-            async: '%env(MESSENGER_TRANSPORT_DSN)%'
-            # failed: 'doctrine://default?queue_name=failed'
-            # sync: 'sync://'
+            email:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    queue_name: email
+            command:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    queue_name: command
+            failed: '%env(MESSENGER_DEAD_LATER_QUEUE_DSN)%'
 
         routing:
-            'Symfony\Component\Mailer\Messenger\SendEmailMessage': async
-            # Route your messages to the transports
-            # 'App\Message\YourMessage': async
+            Symfony\Component\Mailer\Messenger\SendEmailMessage: email
+            App\FrameworkInfrastructure\Domain\Command\CommandInterface: command
 
 when@test:
     framework:
         messenger:
             transports:
-                # replace with your transport name here (e.g., my_transport: 'in-memory://')
-                # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
-                async: 'in-memory://'
+                email:
+                    dsn: 'in-memory://'
+                    options:
+                        queue_name: default
+                command:
+                    dsn: 'sync://'
+                    options:
+                        queue_name: command
